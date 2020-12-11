@@ -1,9 +1,6 @@
 from telegram.ext import CommandHandler, Filters
 
-import helpers.asi
-import helpers.cas
-import helpers.sp
-import helpers.sw
+from helpers import asi, cas, sp, sw
 
 
 def start_pvt(update, context):
