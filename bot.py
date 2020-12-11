@@ -1,36 +1,66 @@
-#######################################################################################
-import logging
+from telegram.ext import Updater
+from secrets import BOT_TOKEN
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
+updater = Updater(API_TOKEN, use_context=True)
+dp = updater.dispatcher
 
-logger = logging.getLogger(__name__)
-#######################################################################################
+if __name__ == "__main__":
+    import sys
+    import os
+    from threading import Thread
+    from telegram.ext import CommandHandler, Filters
+    from handlers import all_handlers
+    from secrets import SUDO_USERS
+    import logging
 
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, Filters
-from secrets import BOT_TOKEN, ANTISPAMINC_TOKEN, SPAMWATCH_TOKEN
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
+    logger = logging.getLogger(__name__)
 
+    for arg in sys.argv:
+        if "-r" in arg:
+            for SUDO_USER in SUDO_USERS:
+                updater.bot.send_message(
+                    SUDO_USER, arg.replace("-r", ""))
 
+    def stop_and_restart(name):
+        updater.stop()
+        os.system("git pull")
+        args = sys.argv
+        for i in range(len(args)):
+            if "-r" in args[i]:
+                del args[i]
+        os.execl(sys.executable, sys.executable, *args,
+                 f"Bot restarted successfully. Initialted by -r{name}.")
 
-'''{'update_id': 87119953, 
-'message': {'message_id': 1236, 'date': 1607665124,  
-'reply_to_message': {'message_id': 1218, 'date': 1607664968, 'text': 'Going to introduce a new bot?', 'entities': [], 'caption_entities': [], 'photo': [], 'new_chat_members': [], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 
-'from': {'id': 1462830154, 'first_name': 'A.B.Ashwanth', 'is_bot': False, 'last_name': 'Morris', 'username': 'Ashwanth123'}}, 'text': '/start@sudoalphaxbot', 'entities': [{'type': 'bot_command', 'offset': 0, 'length': 20}], 'caption_entities': [], 'photo': [], 'new_chat_members': [], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 1093541050, 'first_name': '𝙿𝚕𝚞𝚝𝚘𝚗𝚒𝚞𝚖 𝚇²', 'is_bot': False, 'username': 'plutoniumx'}}}
-'''
-def main():
+    def restart(update, context):
+        update.message.reply_text("Bot is restarting...")
+        Thread(
+            target=stop_and_restart,
+            args=(update.message.from_user.first_name,)
+        ).start()
 
-    updater = Updater(BOT_TOKEN, use_context=True)
-    dispatcher = updater.dispatcher
+    for handler in all_handlers:
+        if len(handler) == 2:
+            if handler[0] == "error":
+                dp.add_error_handler(
+                    handler[1]
+                )
+                pass
+            else:
+                dp.add_handler(
+                    handler[0],
+                    handler[1]
+                )
+        else:
+            dp.add_handler(
+                handler[0]
+            )
 
-    dispatcher.add_handler()
+    dp.add_handler(
+        CommandHandler("r", restart, filters=Filters.user(SUDO_USERS))
+    )
 
-    updater.start_polling()
-
+    updater.start_polling(clean=True)
     updater.idle()
-
-
-if __name__ == '__main__':
-    main()
