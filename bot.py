@@ -1,7 +1,7 @@
 from telegram.ext import Updater
 from secrets import BOT_TOKEN
 
-updater = Updater(API_TOKEN, use_context=True)
+updater = Updater(BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
 
 if __name__ == "__main__":
