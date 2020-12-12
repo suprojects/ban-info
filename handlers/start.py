@@ -10,8 +10,9 @@ def start_pvt(update, context):
         context.bot.send_chat_action(update.message.chat.id, "typing")
         msg.reply_text(text=("""
 
-👥 User: <a href="tg://user?id={id}">{firstname}</a>
-🔖 ID: <code>{id}</code>
+👥 <a href="tg://user?id={id}">{firstname}</a>
+🆔 <code>{id}</code>
+
 🦅 SpamWatch Banned: <code>{SW}</code>
 🤖 CAS Banned: <code>{CAS}</code>
 ✉ Spam Protection Banned: <code>{SPB}</code>
@@ -21,10 +22,10 @@ def start_pvt(update, context):
 
     firstname = str(fwdusr.first_name),
     id=fwdusr.id,
-    SW="Yes" if sw.check(fwdusr.id) else "No",
-    CAS="Yes" if cas.check(fwdusr.id) else "No",
-    SPB="Yes" if sp.check(fwdusr.id) else "No",
-    ASI="Yes" if asi.check(fwdusr.id) else "No"
+    SW="YES" if sw.check(fwdusr.id) else "NO",
+    CAS="YES" if cas.check(fwdusr.id) else "NO",
+    SPB="YES" if sp.check(fwdusr.id) else "NO",
+    ASI="YES" if asi.check(fwdusr.id) else "NO"
 
     ), parse_mode = 'HTML'
 )
