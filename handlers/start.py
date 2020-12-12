@@ -21,10 +21,10 @@ def start_pvt(update, context):
 
     firstname = str(fwdusr.first_name),
     id=fwdusr.id,
-    SW=sw.check(fwdusr.id),
-    CAS=cas.check(fwdusr.id),
-    SPB=sp.check(fwdusr.id),
-    ASI=asi.check(fwdusr.id)
+    SW="yes" if sw.check(fwdusr.id) else "no",
+    CAS="yes" if cas.check(fwdusr.id) else "no",
+    SPB="yes" if sp.check(fwdusr.id) else "no",
+    ASI="yes" if asi.check(fwdusr.id) else "no"
 
     ), parse_mode = 'HTML'
 )
