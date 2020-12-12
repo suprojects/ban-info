@@ -10,12 +10,12 @@ def start_pvt(update, context):
         context.bot.send_chat_action(update.message.chat.id, "typing")
         msg.reply_text(text=("""
 
-👥 Info of <a href="tg://user?id={id}">{firstname}</a>:
-🔖 User ID: <code>{id}</code>
+👥 User: <a href="tg://user?id={id}">{firstname}</a>
+🔖 ID: <code>{id}</code>
 🦅 SpamWatch Banned: <code>{SW}</code>
 🤖 CAS Banned: <code>{CAS}</code>
 ✉ Spam Protection Banned: <code>{SPB}</code>
-⛔️AntiSpamInc Banned: <code>{ASI}</code>
+⛔️ AntiSpamInc Banned: <code>{ASI}</code>
 
 """).format(
 
