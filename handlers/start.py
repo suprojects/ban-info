@@ -1,6 +1,8 @@
+from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, Filters
 from helpers import asi, cas, sp, sw
 
+@run_async
 def start_pvt(update, context):
     usr, msg = update.message.from_user, update.message
 #try:
