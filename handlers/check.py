@@ -1,11 +1,9 @@
-from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, Filters
 from helpers import asi, cas, sp, sw
 
-@run_async
-def start_pvt(update, context):
+def check(update, context):
     usr, msg = update.message.from_user, update.message
-#try:
+
     if msg.reply_to_message:
 
         fwdusr = msg.reply_to_message.from_user
@@ -24,26 +22,20 @@ def start_pvt(update, context):
 
     firstname = str(fwdusr.first_name),
     id=fwdusr.id,
-    SW="YES" if sw.check(fwdusr.id) else "NO",
-    CAS="YES" if cas.check(fwdusr.id) else "NO",
-    SPB="YES" if sp.check(fwdusr.id) else "NO",
-    ASI="YES" if asi.check(fwdusr.id) else "NO"
+    SW=sw.check(fwdusr.id),
+    CAS=cas.check(fwdusr.id),
+    SPB=sp.check(fwdusr.id),
+    ASI=asi.check(fwdusr.id)
 
     ), parse_mode = 'HTML'
 )
 
     else:
-        msg.reply_text("You need to a message from a user!")
+        msg.reply_text("You need to a message from a user!")    
 #except:
 #    msg.reply_text("An unexpected error occured, try telling us about it in @su_BotsChat.")
 
 
 __handlers__ = [
-    [
-        CommandHandler(
-            "start",
-            start_pvt,
-            Filters.chat_type.supergroup
-        )
-    ]
+    [CommandHandler("check",check,Filters.chat_type.supergroup)]
 ]
