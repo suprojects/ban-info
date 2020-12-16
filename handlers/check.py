@@ -2,40 +2,57 @@ from telegram.ext import CommandHandler, Filters
 from helpers import asi, cas, sp, sw
 
 def check(update, context):
+
     usr, msg = update.message.from_user, update.message
 
-    if msg.reply_to_message:
+    try:
+        if msg.reply_to_message:
 
-        fwdusr = msg.reply_to_message.from_user
-        context.bot.send_chat_action(update.message.chat.id, "typing")
-        msg.reply_text(text=("""
+            userinfo = msg.reply_to_message.from_user
+            context.bot.send_chat_action(update.message.chat.id, "typing")
+            
+            SpamWatch = sw.check(userinfo.id)
+            CAS = cas.check(userinfo.id)
+            SpamProtection = sp.check(userinfo.id)
+            AntiSpamInc = asi.check(userinfo.id)
 
-👥 <a href="tg://user?id={id}">{firstname}</a>
-🆔 <code>{id}</code>
+            msg.reply_text(text=("""
+
+👤 First Name: {firstname} {lastname}
+🆔 ID: <code>{id}</code>
+🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
 
 🦅 SpamWatch Banned: <code>{SW}</code>
 🤖 CAS Banned: <code>{CAS}</code>
-✉ Spam Protection Banned: <code>{SPB}</code>
-⛔️ AntiSpamInc Banned: <code>{ASI}</code>
+✉ Spam Protection Blacklisted: <code>{SPB}</code>
+⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
+🛡 AntiSpamInc Banned: <code>{ASI}</code>
 
+✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
 """).format(
 
-    firstname = str(fwdusr.first_name),
-    id=fwdusr.id,
-    SW=sw.check(fwdusr.id),
-    CAS=cas.check(fwdusr.id),
-    SPB=sp.check(fwdusr.id),
-    ASI=asi.check(fwdusr.id)
+        firstname = "" if userinfo.first_name == None else userinfo.first_name,
+        lastname = "" if userinfo.last_name == None else userinfo.last_name,
+        id = userinfo.id,
+        initid = usr.id,
+        initfirstname = usr.first_name,
+        SW = SpamWatch.get('is_Banned', False),
+        CAS = CAS.get('is_Banned', False),
+        SPB = SpamProtection.get('is_Banned', 'Not in records'),
+        SP = SpamProtection.get('is_Potential', 'Not in records'),
+        ASI = AntiSpamInc.get('is_Banned', False)
 
-    ), parse_mode = 'HTML'
-)
+), parse_mode = 'HTML'
 
-    else:
-        msg.reply_text("You need to a message from a user!")    
-#except:
-#    msg.reply_text("An unexpected error occured, try telling us about it in @su_BotsChat.")
+    )
+        else:
+            msg.reply_text("You need to reply to a users message 💬")
+
+    except:
+        msg.reply_text("An unexpected error occured ⚠. Please report it to us.")
 
 
 __handlers__ = [
-    [CommandHandler("check",check,Filters.chat_type.supergroup)]
+
+    [CommandHandler("check", check, filters=Filters.chat_type.group | Filters.chat_type.supergroup, run_async=True)]
 ]

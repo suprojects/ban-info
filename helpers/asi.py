@@ -5,10 +5,14 @@ client = Connect(ANTISPAMINC_TOKEN)
 
 
 def check(id):
-    banned = client.is_banned(id)
+    userinfo = client.is_banned(id)
 
-    if banned == None:
-        return False
+    results = {}
 
-    elif AntispamIncBanned.banned == True:
-        return True
+    if userinfo:
+
+        results.update({'is_Banned': userinfo.banned, 'reason': userinfo.reason})
+        return results
+
+    else:
+        return results

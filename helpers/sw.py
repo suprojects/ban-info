@@ -9,18 +9,14 @@ client = spamwatch.Client(SPAMWATCH_TOKEN)
 def check(id):
 
     id = int(id)
-    baninfo = client.get_ban(id)
+    userinfo = client.get_ban(id)
 
     results = {}
-    
-    if baninfo == False:
-        
-        results.update({'isBanned': False})
+
+    if userinfo:
+
+        results.update({'id' : userinfo.id, 'is_Banned' : True, 'date' : userinfo.date, 'reason' : userinfo.reason, 'admin' : userinfo.admin, 'message' : userinfo.message})
         return results
 
-    elif int(baninfo.id) == id:
-        
-        results.update({'id': baninfo.id, 'isBanned' : True, 'date' : baninfo.date, 'reason' : baninfo.reason, 'admin' : baninfo.admin, 'message' : baninfo.message})
+    else:
         return results
-        
-a = check('1250235607')
