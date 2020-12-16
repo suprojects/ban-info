@@ -1,7 +1,5 @@
 import spamwatch
-#from secrets import SPAMWATCH_TOKEN
-
-SPAMWATCH_TOKEN = '5p3uhBoURYnZVyAa5mzt7EOCRIOhwcTOFeU7NCqfLND8S6N3RCAF~kRJlJ2wVMhR'
+from secrets import SPAMWATCH_TOKEN
 
 client = spamwatch.Client(SPAMWATCH_TOKEN)
 
