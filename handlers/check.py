@@ -18,7 +18,7 @@ def check(update, context):
 
             msg.reply_text(text=("""
 
-👤 First Name: {firstname} {lastname}
+👤 Name: {firstname} {lastname}
 🆔 ID: <code>{id}</code>
 🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
 
