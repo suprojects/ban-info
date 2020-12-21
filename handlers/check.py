@@ -18,18 +18,18 @@ def check(update, context):
 
             msg.reply_text(text=("""
 
-👤 Name: {firstname} {lastname}
-🆔 ID: <code>{id}</code>
-🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
+    👤 Name: {firstname} {lastname}
+    🆔 ID: <code>{id}</code>
+    🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
 
-🦅 SpamWatch Banned: <code>{SW}</code>
-🤖 CAS Banned: <code>{CAS}</code>
-✉ Spam Protection Blacklisted: <code>{SPB}</code>
-⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
-🛡 AntiSpamInc Banned: <code>{ASI}</code>
+    🦅 SpamWatch Banned: <code>{SW}</code>
+    🤖 CAS Banned: <code>{CAS}</code>
+    ✉ Spam Protection Blacklisted: <code>{SPB}</code>
+    ⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
+    🛡 AntiSpamInc Banned: <code>{ASI}</code>
 
-✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
-""").format(
+    ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
+    """).format(
 
         firstname = "" if userinfo.first_name == None else userinfo.first_name,
         lastname = "" if userinfo.last_name == None else userinfo.last_name,
@@ -42,7 +42,7 @@ def check(update, context):
         SP = SpamProtection.get('is_Potential', 'Not in records'),
         ASI = AntiSpamInc.get('is_Banned', False)
 
-), parse_mode = 'HTML'
+    ), parse_mode = 'HTML'
 
     )
         else:
@@ -54,5 +54,5 @@ def check(update, context):
 
 __handlers__ = [
 
-    [CommandHandler("check", check, filters=Filters.chat_type.group | Filters.chat_type.supergroup, run_async=True)]
+    [CommandHandler("check", check, filters=Filters.chat_type.groups, run_async=True)]
 ]
