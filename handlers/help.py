@@ -19,8 +19,7 @@ As you would have read in the /start, I can scan members against Telegram's lead
 
 👥 <b>Group Commands:</b>
 
-1️⃣ /check - Send /check as a reply to a user's message to check the bans of the user.
-2️⃣ /checkme - To check the ban info of yourself in a group.
+1️⃣ /check - Send /check as a reply to a user's message to check the ban info of the user.
 
 👤 <b>Private Commands:</b>
 
@@ -37,5 +36,5 @@ But on the downside 👎, I will not be able to see if you send commands like <c
 """).format(id = usr.id, firstname = usr.first_name, botname = context.bot.first_name, botusername = context.bot.username), parse_mode= 'HTML', reply_markup= BUTTON_MARKUP, disable_web_page_preview=True)
 
 __handlers__ = [
-    [CommandHandler("help", help_text, filters=Filters.chat_type.private)]
+    [CommandHandler("help", help_text, filters=Filters.chat_type.private, run_async=True)]
 ]

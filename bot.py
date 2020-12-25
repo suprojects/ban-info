@@ -1,5 +1,5 @@
-from telegram.ext import Updater
-from secrets import BOT_TOKEN
+from telegram.ext import Updater, PicklePersistence
+from secrets import BOT_TOKEN, SUDO_USERS
 
 updater = Updater(BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
