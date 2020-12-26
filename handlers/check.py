@@ -55,7 +55,7 @@ def check(update, context):
 def no_reply(update, context):
     BUTTONS = InlineKeyboardMarkup([[deleteButton]])
     
-    update.message.reply_text(text=("You will need to reply to a user's message to get the info 🔗"), reply_markup=BUTTONS)
+    update.message.reply_text(text=("Reply to a user's message to get the info"), reply_markup=BUTTONS)
 
 
 __handlers__ = [
