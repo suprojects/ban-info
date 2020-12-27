@@ -21,4 +21,4 @@ Error:
     except:
         pass
 
-__handlers__ = [["error", error, run_async= True]]
+__handlers__ = [["error", error]]
