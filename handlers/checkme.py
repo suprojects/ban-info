@@ -18,8 +18,6 @@ def checkme(update, context):
 
     msg.reply_text(text=("""
 
-✅ Self check initiated by <a href="tg://user?id={id}">{firstname}</a>.
-
 👤 Name: {firstname} {lastname}
 🆔 ID: <code>{id}</code>
 🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
