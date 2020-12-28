@@ -1,10 +1,9 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters
+from telegram.utils import helpers
 from helpers import asi, cas, sp, sw
 
 deleteButton = InlineKeyboardButton("OK", callback_data="delete")
-moreinfo = InlineKeyboardButton("Detailed Ban Info", callback_data="advinfo")
-
 
 def check(update, context):
 
@@ -18,12 +17,14 @@ def check(update, context):
     SpamProtection = sp.check(userinfo.id)
     AntiSpamInc = asi.check(userinfo.id)
 
+    moreinfo = InlineKeyboardButton("Detailed Ban Info", url=helpers.create_deep_linked_url(context.bot.username, ('check_{id}').format(id = userinfo.id)))
+
     BUTTONS = InlineKeyboardMarkup([
         [moreinfo],
         [deleteButton],
     ])
 
-    s = msg.reply_text(text=("""
+    msg.reply_text(text=("""
 
 👤 Name: {firstname} {lastname}
 🆔 ID: <code>{id}</code>
@@ -33,7 +34,7 @@ def check(update, context):
 🤖 CAS Banned: <code>{CAS}</code>
 ✉ Spam Protection Blacklisted: <code>{SPB}</code>
 ⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
-🛡 AntiSpamInc Banned: <code>{ASI}</code>
+⚡️ AntiSpamInc Banned: <code>{ASI}</code>
 
 ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
 """).format(
@@ -54,7 +55,6 @@ def check(update, context):
 
 def no_reply(update, context):
     BUTTONS = InlineKeyboardMarkup([[deleteButton]])
-    
     update.message.reply_text(text=("Reply to a user's message to get the info"), reply_markup=BUTTONS)
 
 
