@@ -1,5 +1,7 @@
-SPAMWATCH_TOKEN = 'fUG438ge8iVPrf7SfwFxCPNnY2Q0P2IiaVOhviePNsIo31m8nQwr~gzku5x_7gV0'
-ANTISPAMINC_TOKEN = 'Zw-tv8hZaAHJw_v9HwnJPQ'
-BOT_TOKEN = '1459172207:AAF_Lpqt_5i1q-rY_HAOqqO-q52FgjoiY8Y'
-SUDO_USERS = 1178472788,
-LOG_ID = -1001146754909
+import os
+
+SPAMWATCH_TOKEN = os.environ.get('SPAMWATCH')
+ANTISPAMINC_TOKEN = os.environ.get('ANTISPAMINC')
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+SUDO_USERS = os.environ.get('SUDO_USERS')
+LOG_ID = os.environ.get('LOG_ID')
