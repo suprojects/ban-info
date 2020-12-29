@@ -5,7 +5,6 @@ from helpers import asi, cas, sp, sw
 
 delete_button = InlineKeyboardButton("OK", callback_data="delete")
 
-
 def check(update, context):
     usr, msg = update.message.from_user, update.message
     userinfo = msg.reply_to_message.from_user
@@ -17,14 +16,7 @@ def check(update, context):
     SpamProtection = sp.check(userinfo.id)
     AntiSpamInc = asi.check(userinfo.id)
 
-    more_info = InlineKeyboardButton(
-        "Detailed Ban Info",
-        helpers.create_deep_linked_url(
-            context.bot.username, "check_{id}".format(
-                id=userinfo.id
-            )
-        )
-    )
+    more_info = InlineKeyboardButton("Detailed Ban Info", helpers.create_deep_linked_url(context.bot.username, "check_{id}".format(id=userinfo.id)))
 
     keyboard = InlineKeyboardMarkup(
         [
@@ -33,8 +25,8 @@ def check(update, context):
         ]
     )
 
-    msg.reply_text(
-        """
+    msg.reply_text(text = ("""
+
 👤 Name: {firstname} {lastname}
 🆔 ID: <code>{id}</code>
 🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
@@ -46,53 +38,27 @@ def check(update, context):
 ⚡️ AntiSpamInc Banned: <code>{ASI}</code>
 
 ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
-    """.format(
-            firstname="" if userinfo.first_name == None else userinfo.first_name,
-            lastname="" if userinfo.last_name == None else userinfo.last_name,
-            id=userinfo.id,
-            initid=usr.id,
-            initfirstname=usr.first_name,
-            SW=SpamWatch.get("is_Banned", False),
-            CAS=CAS.get("is_Banned", False),
-            SPB=SpamProtection.get("is_Banned", "Not in records"),
-            SP=SpamProtection.get("is_Potential", "Not in records"),
-            ASI=AntiSpamInc.get("is_Banned", False)
+""").format(
+        firstname="" if userinfo.first_name == None else userinfo.first_name,
+        lastname="" if userinfo.last_name == None else userinfo.last_name,
+        id=userinfo.id,
+        initid=usr.id,
+        initfirstname=usr.first_name,
+        SW=SpamWatch.get("is_Banned", False),
+        CAS=CAS.get("is_Banned", False),
+        SPB=SpamProtection.get("is_Banned", "Not in records"),
+        SP=SpamProtection.get("is_Potential", "Not in records"),
+        ASI=AntiSpamInc.get("is_Banned", False)
 
-        ),
-        "HTML",
-        reply_markup=keyboard
-    )
+    ), parse_mode = 'HTML', reply_markup=keyboard)
 
 
 def no_reply(update, context):
-    keyboard = InlineKeyboardMarkup(
-        [
-            [delete_button]
-        ]
-    )
-    update.message.reply_text(
-        "Reply to a user's message to get the info",
-        reply_markup=keyboard
-    )
+
+    update.message.reply_text("Reply to a user's message to get the info", reply_markup = InlineKeyboardMarkup([[delete_button]]))
 
 
 __handlers__ = [
-    [
-        CommandHandler(
-            "check",
-            check,
-            filters=Filters.chat_type.groups
-            & Filters.reply,
-            run_async=True
-        )
-    ],
-    [
-        CommandHandler(
-            "check",
-            no_reply,
-            filters=Filters.chat_type.groups
-            & ~ Filters.reply,
-            run_async=True
-        )
-    ]
+    [CommandHandler("check", check, filters=Filters.chat_type.groups & Filters.reply, run_async=True)],
+    [CommandHandler("check", no_reply, filters=Filters.chat_type.groups & ~ Filters.reply, run_async=True)]
 ]

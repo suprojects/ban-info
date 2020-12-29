@@ -4,28 +4,21 @@ from secrets import ANTISPAMINC_TOKEN
 client = Connect(ANTISPAMINC_TOKEN)
 
 
-def check(id):
+def check(userid):
     results = {}
+    userid = int(userid)
 
-    try:
-        userinfo = client.is_banned(id)
+    userinfo = client.is_banned(userid)
 
-        if userinfo:
+    if userinfo:
 
-            results.update(
-                {
-                    "is_Banned": userinfo.banned,
-                    "reason": userinfo.reason
-                }
-            )
-            return results
-
-        else:
-            return results
-    except:
         results.update(
             {
-                "is_Banned": "error"
+                "is_Banned": userinfo.banned,
+                "reason": userinfo.reason
             }
         )
+        return results
+
+    else:
         return results

@@ -1,15 +1,15 @@
 from secrets import LOG_CHAT
 
-
 def error(update, context):
-    context.bot.send_message(
-        LOG_CHAT,
-        """
+
+    context.bot.send_message(chat_id = LOG_CHAT, text = ("""
+
 # {username}
 
 Error:
 {error}
-    """.format(username=context.bot.username, error=context.error))
+
+""").format(username=context.bot.username, error=context.error))
 
     try:
         if context.error.message == "Have no rights to send a message":
@@ -17,15 +17,12 @@ Error:
 
         else:
             update.message.reply_text(
-                "⚠ An unexpected error occured, the error report was forwarded to the developers."
-            )
+                "⚠ An unexpected error occured, the error report was forwarded to the developers.")
     except:
         pass
 
 
 __handlers__ = [
-    [
-        "error",
-        error
-    ]
+    
+    ["error",error]
 ]

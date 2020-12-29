@@ -6,10 +6,20 @@ from telegram.utils import helpers
 def delete(update, context):
     query, user, chat = update.callback_query, update.effective_user, update.effective_chat
 
-    if user.id == query.message.reply_to_message.from_user.id or chat.get_member(user.id).status in ("creator", "administrator"):
-        query.message.delete()
+    if query.message.reply_to_message:
+
+        if user.id == query.message.reply_to_message.from_user.id or chat.get_member(user.id).status in ("creator", "administrator"):
+            query.message.delete()
+
+        else:
+            query.answer(text = "You did not prompt this check! ✋", show_alert=True)
+
     else:
-        query.answer("You did not prompt this check! ✋", show_alert=True)
+        if chat.get_member(user.id).status in ("creator", "administrator"):
+            query.message.delete()
+
+        else:
+            query.answer(text = "You aren't an admin", show_alert= True)
 
 
 def advinfo(update, context):
@@ -17,18 +27,6 @@ def advinfo(update, context):
 
 
 __handlers__ = [
-    [
-        CallbackQueryHandler(
-            delete,
-            "delete",
-            run_async=True
-        )
-    ],
-    [
-        CallbackQueryHandler(
-            advinfo,
-            "advinfo",
-            run_async=True
-        )
+    [CallbackQueryHandler(callback = delete, pattern = "delete", run_async=True)],
+    [CallbackQueryHandler(callback = advinfo, pattern = "advinfo", run_async=True)],
     ]
-]
