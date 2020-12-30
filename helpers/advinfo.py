@@ -1,4 +1,4 @@
-from helpers import sw, sp, cas, asi
+from helpers import sw, sp, cas, nsp
 
 def check(userid):
     userid = int(userid)
@@ -47,14 +47,14 @@ def check(userid):
         results.update({'SpamProtection': SpamProtectionResults})
 
 
-    #AntiSpamInc
-    AntiSpamInc = asi.check(userid)
+    #NoSpamPlus
+    NoSpamPlus = nsp.check(userid)
 
-    if AntiSpamInc.get("is_Banned", False):
-        AntiSpamIncResults = ("⚡ AntiSpamInc Banned: <code>{banned}</code>\n- 💬 Reason: <code>{reason}</code>").format(banned = AntiSpamInc.get("is_Banned", False), reason = AntiSpamInc['reason'])
-        results.update({'AntiSpamInc': AntiSpamIncResults})
+    if NoSpamPlus.get("is_Banned", False):
+        NoSpamPlusResults = ("➕ NoSpamPlus Banned: <code>{banned}</code>\n- 💬 Reason: <code>{reason}</code>").format(banned = NoSpamPlus.get("is_Banned", False), reason = NoSpamPlus['reason'])
+        results.update({'NoSpamPlus': NoSpamPlusResults})
 
     else:
-        AntiSpamIncResults = ("⚡ AntiSpamInc Banned: <code>{banned}</code>").format(banned = AntiSpamInc.get("is_Banned", False))
-        results.update({'AntiSpamInc': AntiSpamIncResults})
+        NoSpamPlusResults = ("➕ NoSpamPlus Banned: <code>{banned}</code>").format(banned = NoSpamPlus.get("is_Banned", False))
+        results.update({'NoSpamPlus': NoSpamPlusResults})
     return results
