@@ -2,31 +2,29 @@ from telegram import MessageEntity
 from telegram.ext import CallbackQueryHandler
 from telegram.utils import helpers
 
-
 def delete(update, context):
-    query, user, chat = update.callback_query, update.effective_user, update.effective_chat
+    query, user, chat, msg = update.callback_query, update.effective_user, update.effective_chat, update.effective_message
 
-    if query.message.reply_to_message:
+    inituser = int(update.callback_query.data.replace('delete_', ''))
 
-        if user.id == query.message.reply_to_message.from_user.id or chat.get_member(user.id).status in ("creator", "administrator"):
-            query.message.delete()
+    if user.id == inituser or chat.get_member(user_id = user.id).status in ("creator", "administrator"):
 
-        else:
-            query.answer(text = "You did not prompt this check! ✋", show_alert=True)
+        if chat.get_member(user_id = context.bot.id).can_delete_messages and msg.reply_to_message:
+            update.effective_message.reply_to_message.delete()
+
+        query.message.delete()
 
     else:
-        if chat.get_member(user.id).status in ("creator", "administrator"):
-            query.message.delete()
+        query.answer(text = "You did not prompt this check! ✋", show_alert=True)
 
-        else:
-            query.answer(text = "You aren't an admin", show_alert= True)
 
 
 def advinfo(update, context):
-    update.callback_query.answer("Coming Soon!", show_alert=True)
 
+    update.callback_query.answer("Coming Soon!", show_alert=True)
+    
 
 __handlers__ = [
-    [CallbackQueryHandler(callback = delete, pattern = "delete", run_async=True)],
-    [CallbackQueryHandler(callback = advinfo, pattern = "advinfo", run_async=True)],
+    [CallbackQueryHandler(callback = delete, pattern = "^delete_", run_async=True)],
+    [CallbackQueryHandler(callback = advinfo, pattern = "^check_", run_async=True)],
     ]
