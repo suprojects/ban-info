@@ -1,5 +1,6 @@
 import os
 
+
 SPAMWATCH_TOKEN = os.environ.get("SPAMWATCH")
 NOSPAMPLUS_TOKEN = os.environ.get("NOSPAMPLUS")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")

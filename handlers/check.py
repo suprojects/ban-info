@@ -30,9 +30,8 @@ def check(update, context):
 
     message.edit_text(text = ("""
 
-👤 Name: {firstname} {lastname}
+👤 Name: <a href="tg://user?id={id}">{firstname} {lastname}</a>
 🆔 ID: <code>{id}</code>
-🔗 Permanent Link: <a href="tg://user?id={id}">{firstname}</a>
 
 🦅 SpamWatch Banned: <code>{SW}</code>
 🤖 CAS Banned: <code>{CAS}</code>

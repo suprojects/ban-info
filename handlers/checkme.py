@@ -5,7 +5,6 @@ from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
 from telegram.utils import helpers
 
 
-
 def checkme(update, context):
 
     userinfo, msg = update.message.from_user, update.message
@@ -16,9 +15,8 @@ def checkme(update, context):
 
     msg.reply_text(text = ("""
 
-👤 Name: {firstname} {lastname}
+👤 Name: <a href="tg://user?id={id}">{firstname} {lastname}</a>
 🆔 ID: <code>{id}</code>
-🔗 Permanent Link: <a href="tg://user?id={id}">{firstname} {lastname}</a>
 
 {SpamWatch}
 {CAS}
