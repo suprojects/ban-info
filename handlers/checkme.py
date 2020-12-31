@@ -1,10 +1,10 @@
+from helpers import advinfo
+import html
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
 from telegram.utils import helpers
-from helpers import asi, cas, sp, sw
 
-delete_button = InlineKeyboardButton("OK", callback_data="delete")
-checkme_button = InlineKeyboardButton("Check my ban info", callback_data="checkme")
+
 
 def checkme(update, context):
 
@@ -12,10 +12,7 @@ def checkme(update, context):
 
     context.bot.send_chat_action(update.message.chat.id, "typing")
 
-    SpamWatch = sw.check(userinfo.id)
-    CAS = cas.check(userinfo.id)
-    SpamProtection = sp.check(userinfo.id)
-    AntiSpamInc = asi.check(userinfo.id)
+    BanInfo = advinfo.check(userinfo.id)
 
     msg.reply_text(text = ("""
 
@@ -23,25 +20,28 @@ def checkme(update, context):
 🆔 ID: <code>{id}</code>
 🔗 Permanent Link: <a href="tg://user?id={id}">{firstname} {lastname}</a>
 
-🦅 SpamWatch Banned: <code>{SW}</code>
-🤖 CAS Banned: <code>{CAS}</code>
-✉ Spam Protection Blacklisted: <code>{SPB}</code>
-⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
-⚡️ AntiSpamInc Banned: <code>{ASI}</code>
-""").format(
-    firstname="" if userinfo.first_name == None else userinfo.first_name,
-    lastname="" if userinfo.last_name == None else userinfo.last_name,
-    id=userinfo.id,
-    SW=SpamWatch.get("is_Banned", False),
-    CAS=CAS.get("is_Banned", False),
-    SPB=SpamProtection.get("is_Banned", "Not in records"),
-    SP=SpamProtection.get("is_Potential", "Not in records"),
-    ASI=AntiSpamInc.get("is_Banned", False)
+{SpamWatch}
+{CAS}
+{SpamProtection}
+{NoSpamPlus}
 
-), parse_mode = "HTML", reply_markup = InlineKeyboardMarkup([[delete_button]]))
+""").format(
+    firstname= html.escape("" if userinfo.first_name == None else userinfo.first_name),
+    lastname= html.escape("" if userinfo.last_name == None else userinfo.last_name),
+    id=userinfo.id,
+    SpamWatch = BanInfo['SpamWatch'],
+    CAS = BanInfo['CAS'],
+    SpamProtection = BanInfo['SpamProtection'],
+    NoSpamPlus = BanInfo['NoSpamPlus'],
+
+), parse_mode = "HTML", disable_web_page_preview = True, quote = False)
 
 
 def checkme_group(update, context):
+
+    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
+
+    checkme_button = InlineKeyboardButton("Check my ban info", url = helpers.create_deep_linked_url(context.bot.username, "checkme"))
 
     keyboard = InlineKeyboardMarkup(
         [
@@ -50,15 +50,16 @@ def checkme_group(update, context):
         ]
     )
 
-    update.message.reply_text(text = "Check your ban info by clicking on this button", reply_markup=keyboard)
+    update.message.reply_text(text = "Check your ban info by clicking on this button. Anyone can check their own ban info by using this button.", reply_markup=keyboard, quote = True)
 
 def checkme_callback(update, context):
-    update.callback_query.answer(url = helpers.create_deep_linked_url(context.bot.username, "check_{id}".format(id=update.effective_user.id)))
+    update.callback_query.answer(url = helpers.create_deep_linked_url(context.bot.username, "checkme"))
 
 
 __handlers__ = [
 
     [CommandHandler("checkme", checkme, filters=Filters.chat_type.private, run_async=True)],
-    [CommandHandler("checkme", checkme_group, filters=Filters.chat_type.groups, run_async=True)],
-    [CallbackQueryHandler(callback = checkme_callback, pattern = "checkme", run_async=True)],
+    [CallbackQueryHandler(callback = checkme_callback, pattern = "^checkme_$", run_async=True)],  
+    [CommandHandler('start', checkme, filters = Filters.regex(pattern = "^/start checkme$"), run_async = True)],
+    [CommandHandler("checkme", checkme_group, filters=Filters.chat_type.groups, run_async=True)], 
 ]

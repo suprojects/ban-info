@@ -16,15 +16,8 @@ def delete(update, context):
 
     else:
         query.answer(text = "You did not prompt this check! ✋", show_alert=True)
-
-
-
-def advinfo(update, context):
-
-    update.callback_query.answer("Coming Soon!", show_alert=True)
     
 
 __handlers__ = [
     [CallbackQueryHandler(callback = delete, pattern = "^delete_", run_async=True)],
-    [CallbackQueryHandler(callback = advinfo, pattern = "^check_", run_async=True)],
     ]

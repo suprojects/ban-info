@@ -3,7 +3,6 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 def help_text(update, context):
-    usr = update.message.from_user
 
     BUTTON_MARKUP = InlineKeyboardMarkup([
             [
@@ -31,12 +30,7 @@ To protect your privacy in your groups, <a href="https://core.telegram.org/bots#
 
 But on the downside 👎, I will not be able to see if you send commands like <code>/check</code>. To overcome this, please send the commands like <code>/check@{botusername}</code>.
 
-""".format(
-        id=usr.id,
-        firstname=usr.first_name,
-        botname=context.bot.first_name,
-        botusername=context.bot.username
-        ), parse_mode = "HTML", run_async = True, reply_markup = BUTTON_MARKUP)
+""".format(botusername=context.bot.username), parse_mode = "HTML", disable_web_page_preview = True, reply_markup = BUTTON_MARKUP)
 
 
 __handlers__ = [

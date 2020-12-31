@@ -1,46 +1,49 @@
 from secrets import SUDO_USERS
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters
-from helpers import asi, cas, sp, sw
-
+from telegram.utils import helpers
+from helpers import nsp, cas, sp, sw
+from html import escape
 
 def debug(update, context):
 
     usr, msg = update.message.reply_to_message.from_user, update.message
 
+    message = msg.reply_text('Sending Debug Message...')
+
     SpamWatch = sw.check(usr.id)
     CAS = cas.check(usr.id)
     SpamProtection = sp.check(usr.id)
-    AntiSpamInc = asi.check(usr.id)
+    NoSpamPlus = nsp.check(usr.id)
 
-    delete_button = InlineKeyboardButton("OK", callback_data="delete")
-    keyboard = InlineKeyboardMarkup([[delete_button]])
+    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
+    more_info = InlineKeyboardButton("Detailed Ban Info", helpers.create_deep_linked_url(context.bot.username, "check_{id}".format(id=usr.id)))
 
-    msg.reply_text(text = ("""
+    keyboard = InlineKeyboardMarkup([[delete_button],[more_info]])
 
-Name: {name}
+    message.edit_text(text = ("""
+
+First Name: {first}
+Last Name: {last}
 ID: {id}
 
-SpamWatch:
-{SW}
+SpamWatch: {SW}
 
-CAS:
-{CAS}
+CAS: {CAS}
 
-Spam Protection:
-{SP}
+Spam Protection: {SP}
 
-Anti Spam Inc:
-{ASI}
+No Spam Plus: {NSP}
 
 """).format(
-        name=usr.first_name,
+        first=escape("" if usr.first_name == None else usr.first_name),
+        last=escape("" if usr.last_name == None else usr.last_name),
         id=usr.id,
         SW=SpamWatch,
         CAS=CAS,
         SP=SpamProtection,
-        ASI=AntiSpamInc
-    ), reply_markup = keyboard)
+        NSP=NoSpamPlus,
+    ), reply_markup = keyboard, disable_web_page_preview = True)
 
 
 __handlers__ = [
