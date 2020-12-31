@@ -4,7 +4,6 @@ from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.utils import helpers
 
-deleteButton = InlineKeyboardButton("OK", callback_data="delete")
 
 def start(update, context):
     usr = update.message.from_user
@@ -35,10 +34,11 @@ Send /help to learn more about me and my commands.
 
 
 def start_group(update, context):
-    update.message.reply_text("I am Alive! 🤖", reply_markup = InlineKeyboardMarkup([[deleteButton]]))
+    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
+    update.message.reply_text("I am Alive! 🤖", reply_markup = InlineKeyboardMarkup([[delete_button]]))
 
 
 __handlers__ = [
-    [CommandHandler("start", start, filters=Filters.chat_type.private & Filters.regex('^/start$'), run_async= True)],
+    [CommandHandler("start", start, filters=Filters.chat_type.private & Filters.regex('^/start$'), run_async=True)],
     [CommandHandler("start", start_group, filters=Filters.chat_type.groups, run_async=True)]
 ]   
