@@ -11,7 +11,7 @@ def start(update, context):
     BUTTON_MARKUP = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton(text="➕ Add me to your group ➕", url=helpers.create_deep_linked_url(context.bot.username, "check_{id}".format(id=usr.id)))
+            InlineKeyboardButton(text="➕ Add me to your group ➕", url=helpers.create_deep_linked_url(context.bot.username, "start", True))
         ],
     ]
 )
