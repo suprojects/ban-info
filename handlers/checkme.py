@@ -59,5 +59,5 @@ __handlers__ = [
     [CommandHandler("checkme", checkme, filters=Filters.chat_type.private, run_async=True)],
     [CallbackQueryHandler(callback = checkme_callback, pattern = "^checkme_$", run_async=True)],  
     [CommandHandler('start', checkme, filters = Filters.regex(pattern = "^/start checkme$"), run_async = True)],
-    [CommandHandler("checkme", checkme_group, filters=Filters.chat_type.groups, run_async=True)], 
+    [CommandHandler("checkme", checkme_group, filters=Filters.chat_type.groups, run_async=True)]
 ]
