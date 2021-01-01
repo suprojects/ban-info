@@ -15,7 +15,10 @@ Chat ID: {chatid}
 Error:
 {error}
 
-""").format(username=context.bot.username, userid = "" if update.message.from_user.id == None else update.message.from_user.id, chatid = "" if update.message.chat.id == None else update.message.chat.id, error=context.error))
+Update:
+{update}
+
+""").format(username=context.bot.username, userid = "" if update.message.from_user.id == None else update.message.from_user.id, chatid = "" if update.message.chat.id == None else update.message.chat.id, error=context.error, update = update))
 
     try:
         if context.error.message == "Have no rights to send a message":
