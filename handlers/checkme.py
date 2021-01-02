@@ -22,6 +22,7 @@ def checkme(update, context):
 {CAS}
 {SpamProtection}
 {NoSpamPlus}
+{SpamBlockers}
 
 """).format(
     firstname= html.escape("" if userinfo.first_name == None else userinfo.first_name),
@@ -31,6 +32,7 @@ def checkme(update, context):
     CAS = BanInfo['CAS'],
     SpamProtection = BanInfo['SpamProtection'],
     NoSpamPlus = BanInfo['NoSpamPlus'],
+    SpamBlockers = BanInfo['SpamBlockers']
 
 ), parse_mode = "HTML", disable_web_page_preview = True, quote = False)
 

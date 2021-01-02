@@ -21,7 +21,7 @@ def check(userid):
             }
         )
 
-        return results
-
     else:
-        return results
+        pass
+
+    return results

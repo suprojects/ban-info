@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
-from helpers import nsp, cas, sp, sw, advinfo
+from helpers import nsp, cas, sp, sw, sb, advinfo
 from html import escape
 from re import search
 
@@ -17,6 +17,7 @@ def check(update, context):
     CAS = cas.check(userinfo.id)
     SpamProtection = sp.check(userinfo.id)
     NoSpamPlus = nsp.check(userinfo.id)
+    SpamBlockers = sb.check(userinfo.id)
 
     delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
     more_info = InlineKeyboardButton("Detailed Ban Info", callback_data = ("check_{userid}").format(userid = userinfo.id))
@@ -38,6 +39,7 @@ def check(update, context):
 ✉ Spam Protection Blacklisted: <code>{SPB}</code>
 ⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
 ➕ NoSpamPlus Banned: <code>{NSP}</code>
+🐞 SpamBlockers Banned: <code>{SB}</code>
 
 ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
 """).format(
@@ -50,7 +52,8 @@ def check(update, context):
         CAS=CAS.get("is_Banned", False),
         SPB=SpamProtection.get("is_Banned", "Not in records"),
         SP=SpamProtection.get("is_Potential", "Not in records"),
-        NSP=NoSpamPlus.get("is_Banned", False)
+        NSP=NoSpamPlus.get("is_Banned", False),
+        SB=SpamBlockers.get('is_Banned', False),
 
     ), parse_mode = 'HTML', reply_markup=buttons)
 
@@ -65,7 +68,7 @@ def check_callback(update, context):
     userid = int(update.callback_query.data.replace('check_', ''))
 
     BanInfo = advinfo.check_small(userid)
-    BanText = ("{SpamWatch}\n{CAS}\n{SpamProtection}\n{NoSpamPlus}\n").format(    SpamWatch = BanInfo['SpamWatch'], CAS = BanInfo['CAS'], SpamProtection = BanInfo['SpamProtection'], NoSpamPlus = BanInfo['NoSpamPlus'])
+    BanText = ("{SpamWatch}\n{CAS}\n{SpamProtection}\n{NoSpamPlus}\n{SpamBlockers}").format(SpamWatch = BanInfo['SpamWatch'], CAS = BanInfo['CAS'], SpamProtection = BanInfo['SpamProtection'], NoSpamPlus = BanInfo['NoSpamPlus'], SpamBlockers = BanInfo['SpamBlockers'])
 
     update.callback_query.answer(text = BanText, show_alert = True)
 

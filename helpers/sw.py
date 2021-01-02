@@ -20,7 +20,7 @@ def check(userid):
             "message": userinfo.message
         })
 
-        return results
-
     else:
-        return results
+        pass
+
+    return results

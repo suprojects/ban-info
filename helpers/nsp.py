@@ -12,13 +12,12 @@ def check(userid):
 
     if userinfo:
 
-        results.update(
-            {
+        results.update({
                 "is_Banned": userinfo.banned,
                 "reason": userinfo.reason
-            }
-        )
-        return results
+            })
 
     else:
-        return results
+        pass
+
+    return results

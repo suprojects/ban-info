@@ -2,7 +2,7 @@ from secrets import SUDO_USERS
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters
 from telegram.utils import helpers
-from helpers import nsp, cas, sp, sw
+from helpers import nsp, cas, sp, sw, sb
 from html import escape
 
 def debug(update, context):
@@ -15,6 +15,7 @@ def debug(update, context):
     CAS = cas.check(usr.id)
     SpamProtection = sp.check(usr.id)
     NoSpamPlus = nsp.check(usr.id)
+    SpamBlockers = sb.check(usr.id)
 
     delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
     more_info = InlineKeyboardButton("Detailed Ban Info", helpers.create_deep_linked_url(context.bot.username, "check_{id}".format(id=usr.id)))
@@ -35,6 +36,8 @@ Spam Protection: {SP}
 
 No Spam Plus: {NSP}
 
+SpamBlockers: {SB}
+
 """).format(
         first=escape("" if usr.first_name == None else usr.first_name),
         last=escape("" if usr.last_name == None else usr.last_name),
@@ -43,6 +46,7 @@ No Spam Plus: {NSP}
         CAS=CAS,
         SP=SpamProtection,
         NSP=NoSpamPlus,
+        SB = SpamBlockers,
     ), reply_markup = keyboard, disable_web_page_preview = True)
 
 
