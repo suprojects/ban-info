@@ -23,6 +23,7 @@ As you would have read in the /start, I can scan members against Telegram"s lead
 1️⃣ /start - Sends the introductory start message.
 2️⃣ /help - Sends this Help message.
 3️⃣ /checkme - Check the ban info of yourself.
+4️⃣ Forward me any user's message to check the info.
 
 🤫 <b>Privacy mode:</b>
 

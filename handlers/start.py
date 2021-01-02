@@ -27,7 +27,7 @@ I can currently search in:
     1️⃣ <a href="https://t.me/SpamWatch">SpamWatch</a>
     2️⃣ <a href="https://cas.chat/">Combot Anti-Spam System</a>
     3️⃣ <a href="https://t.me/SpamProtectionBot">Spam Protection</a> (by <a href="https://intellivoid.net/">Intellivoid</a>)
-    4️⃣ <a href="https://t.me/NoSpamPlus">NoSpamPlus</a>
+    4️⃣ <a href="https://t.me/NoSpamPlus">NoSpam+</a>
     5️⃣ <a href="https://t.me/SpamBlockers">SpamBlockers</a>
 
 Send /help to learn more about me and my commands.

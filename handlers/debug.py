@@ -9,7 +9,7 @@ def debug(update, context):
 
     usr, msg = update.message.reply_to_message.from_user, update.message
 
-    message = msg.reply_text('Sending Debug Message...')
+    message = msg.reply_text('🔄 Sending Debug Message...')
 
     SpamWatch = sw.check(usr.id)
     CAS = cas.check(usr.id)

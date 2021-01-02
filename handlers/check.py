@@ -9,7 +9,7 @@ def check(update, context):
     usr, msg = update.message.from_user, update.message
     userinfo = msg.reply_to_message.from_user
 
-    message = msg.reply_text("Processing...")
+    message = msg.reply_text("🔄 Processing...")
 
     context.bot.send_chat_action(update.message.chat.id, "typing")
 
