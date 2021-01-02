@@ -32,7 +32,7 @@ def check_small(userid):
     #SpamProtection
     SpamProtection = sp.check(userid)
 
-    if SpamProtection['success']:
+    if SpamProtection.get('success', False):
         SpamProtectionResults = ("✉ Spam Protection Banned: {banned}\n⚠ Potential Spammer: {potential}").format(banned = SpamProtection['is_Banned'], potential = SpamProtection['is_Potential'], reason = SpamProtection['reason'])
         
         if SpamProtection['is_Banned']:
@@ -102,7 +102,7 @@ def check(userid):
     #SpamProtection
     SpamProtection = sp.check(userid)
 
-    if SpamProtection['success']:
+    if SpamProtection.get('success', False):
         SpamProtectionResults = ("✉ Spam Protection Banned: <code>{banned}</code>\n⚠ Potential Spammer: <code>{potential}</code>").format(banned = SpamProtection['is_Banned'], potential = SpamProtection['is_Potential'], reason = SpamProtection['reason'], link = SpamProtection['link'])
         
         if SpamProtection['is_Banned']:
