@@ -36,7 +36,7 @@ def check_small(userid):
         SpamProtectionResults = ("✉ Spam Protection Banned: {banned}\n⚠ Potential Spammer: {potential}").format(banned = SpamProtection['is_Banned'], potential = SpamProtection['is_Potential'], reason = SpamProtection['reason'])
         
         if SpamProtection['is_Banned']:
-            SpamProtectionResults = SpamProtectionResults + ("- 💬 Reason: {reason}").format(reason = SpamProtection['reason'])
+            SpamProtectionResults = SpamProtectionResults + ("\n- 💬 Reason: {reason}").format(reason = SpamProtection['reason'])
 
     else:
         SpamProtectionResults = ("✉ Spam Protection Banned: User not found in Records")
