@@ -1,4 +1,4 @@
-from helpers import sw, sp, cas, nsp, sb
+from helpers import sw, sp, cas, nsp, sb, owl
 
 def check_small(userid):
     userid = int(userid)
@@ -68,6 +68,18 @@ def check_small(userid):
     results.update({'SpamBlockers': SpamBlockersResults})
 
 
+    #OwlAntiSpam
+    OwlAntiSpam = owl.check(userid)
+
+    if OwlAntiSpam.get("is_Banned", False):
+        OwlAntiSpamResults = ("🦉 OwlAntiSpam Banned: {banned}\n- 📅 Date of ban (UTC): <code{date}>\n- 💬 Reason: {reason}").format(banned = OwlAntiSpam.get("is_Banned", False), date = OwlAntiSpam['date'], reason = OwlAntiSpam['reason'])
+
+    else:
+        OwlAntiSpamResults = ("🦉 OwlAntiSpam Banned: {banned}").format(banned = OwlAntiSpam.get("is_Banned", False))
+        
+    results.update({'OwlAntiSpam': OwlAntiSpamResults})
+
+
     return results
 
 
@@ -106,7 +118,7 @@ def check(userid):
         SpamProtectionResults = ("✉ Spam Protection Banned: <code>{banned}</code>\n⚠ Potential Spammer: <code>{potential}</code>").format(banned = SpamProtection['is_Banned'], potential = SpamProtection['is_Potential'], reason = SpamProtection['reason'], link = SpamProtection['link'])
         
         if SpamProtection['is_Banned']:
-            SpamProtectionResults = SpamProtectionResults + ("- 💬 Reason: <code>{reason}</code>\n- 🔗 More Info: <a href='{link}'>Click here 🔘</a>\n").format(reason = SpamProtection['reason'], link = SpamProtection['link'])
+            SpamProtectionResults = SpamProtectionResults + ("\n- 💬 Reason: <code>{reason}</code>\n- 🔗 More Info: <a href='{link}'>Click here</a>\n").format(reason = SpamProtection['reason'], link = SpamProtection['link'])
         
         else:
             pass
@@ -139,6 +151,18 @@ def check(userid):
         SpamBlockersResults = ("🐞 SpamBlockers Banned: <code>{banned}</code>").format(banned = SpamBlockers.get("is_Banned", False))
     
     results.update({'SpamBlockers': SpamBlockersResults})
+
+
+    #OwlAntiSpam
+    OwlAntiSpam = owl.check(userid)
+
+    if OwlAntiSpam.get("is_Banned", False):
+        OwlAntiSpamResults = ("🦉 OwlAntiSpam Banned: <code>{banned}</code>\n- 📅 Date of ban (UTC): <code{date}></code>\n- 💬 Reason: <code>{reason}</code>\n").format(banned = OwlAntiSpam.get("is_Banned", False), date = OwlAntiSpam['date'], reason = OwlAntiSpam['reason'])
+
+    else:
+        OwlAntiSpamResults = ("🦉 OwlAntiSpam Banned: <code>{banned}</code>").format(banned = OwlAntiSpam.get("is_Banned", False))
+        
+    results.update({'OwlAntiSpam': OwlAntiSpamResults})
 
 
     return results

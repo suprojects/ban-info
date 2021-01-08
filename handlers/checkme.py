@@ -10,16 +10,17 @@ def checkme(update, context):
     msg = update.message
     userinfo = update.message.from_user
 
-    message = msg.reply_text(text='🔄 Processing...', quote=True)
 
     #check if forwarded message
     if update.message.forward_from:
         userinfo = update.message.forward_from
 
     elif update.message.forward_sender_name:
-        message.edit_text("{name} has hidden forwards linking. Hence, details cannot be displayed".format(name = update.message.forward_sender_name))
+        msg.reply_text("{name} has hidden forwards linking. Hence, details cannot be displayed".format(name = update.message.forward_sender_name))
         return
 
+
+    message = msg.reply_text(text='🔄 Processing...', quote=True)
 
     context.bot.send_chat_action(update.message.chat.id, "typing")
 
@@ -35,6 +36,7 @@ def checkme(update, context):
 {SpamProtection}
 {NoSpamPlus}
 {SpamBlockers}
+{OwlAntiSpam}
 
 """).format(
     firstname= html.escape("" if userinfo.first_name == None else userinfo.first_name),
@@ -44,7 +46,8 @@ def checkme(update, context):
     CAS = BanInfo['CAS'],
     SpamProtection = BanInfo['SpamProtection'],
     NoSpamPlus = BanInfo['NoSpamPlus'],
-    SpamBlockers = BanInfo['SpamBlockers']
+    SpamBlockers = BanInfo['SpamBlockers'],
+    OwlAntiSpam = BanInfo['OwlAntiSpam'],
 
 ), parse_mode = "HTML", disable_web_page_preview = True)
 
