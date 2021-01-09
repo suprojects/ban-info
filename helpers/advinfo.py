@@ -1,6 +1,5 @@
 from helpers import sw, sp, cas, nsp, sb, owl
 
-
 def check_small(userid):
     userid = int(userid)
     results = {}
