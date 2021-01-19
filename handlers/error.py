@@ -8,7 +8,7 @@ def error(update, context):
             update.message.chat.leave()
             return
 
-        elif context.error.message == "Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running": return
+        elif context.error.message == "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running": return
 
         else:
             update.message.reply_text("⚠ An unexpected error occured, the error report was forwarded to the developers.", reply_markup = ([[InlineKeyboardButton("OK", callback_data=f"delete_{update.message.from_user.id}")]])) 
@@ -26,7 +26,7 @@ Error:
 Update:
 {update}
 
-"""))
+"""))   
 
 
 __handlers__ = [
