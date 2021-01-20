@@ -42,7 +42,7 @@ def check(update, context):
 ⛔ Potential Spammer (By Spam Protection): <code>{SP}</code>
 ➕ NoSpamPlus Banned: <code>{NSP}</code>
 🐞 SpamBlockers Banned: <code>{SB}</code>
-🦉 OwnAntiSpam Banned: <code>{OWL}</code>
+🦉 OwlAntiSpam Banned: <code>{OWL}</code>
 
 ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
 """).format(
@@ -72,7 +72,7 @@ def check_callback(update, context):
     userid = int(update.callback_query.data.replace('check_', ''))
 
     BanInfo = advinfo.check_small(userid)
-    BanText = ("{SpamWatch}\n{CAS}\n{SpamProtection}\n{NoSpamPlus}\n{SpamBlockers}\n{OwlAntiSpam}").format(SpamWatch = BanInfo['SpamWatch'], CAS = BanInfo['CAS'], SpamProtection = BanInfo['SpamProtection'], NoSpamPlus = BanInfo['NoSpamPlus'], SpamBlockers = BanInfo['SpamBlockers'], OwlAntiSpam = BanInfo['OwnAntiSpam'])
+    BanText = ("{SpamWatch}\n{CAS}\n{SpamProtection}\n{NoSpamPlus}\n{SpamBlockers}\n{OwlAntiSpam}").format(SpamWatch = BanInfo['SpamWatch'], CAS = BanInfo['CAS'], SpamProtection = BanInfo['SpamProtection'], NoSpamPlus = BanInfo['NoSpamPlus'], SpamBlockers = BanInfo['SpamBlockers'], OwlAntiSpam = BanInfo['OwlAntiSpam'])
 
     update.callback_query.answer(text = BanText, show_alert = True)
 

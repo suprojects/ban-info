@@ -12,7 +12,7 @@ def check_small(userid):
         SpamWatchResults = ("🦅 SpamWatch Banned: {banned}\n- 📅 Date of ban (UTC): <code{date}>\n- 💬 Reason: {reason}").format(banned = SpamWatch.get("is_Banned", False), date = SpamWatch['date'], reason = SpamWatch['reason'])
 
     else:
-        SpamWatchResults = ("🦅 SpamWatch Banned: {banned}").format(banned = SpamWatch.get("is_Banned", False))
+        SpamWatchResults = ('')
         
     results.update({'SpamWatch': SpamWatchResults})
 
@@ -24,7 +24,7 @@ def check_small(userid):
         CASResults = ("🤖 CAS Banned: {banned}\n- 📅 Date of ban: {date}\n- 🔢 Number of offences: {offences}").format(banned = CAS.get('is_Banned', False), date = CAS['date'], offences = CAS['offences'])
 
     else:
-        CASResults = ("🤖 CAS Banned: {banned}").format(banned = CAS.get("is_Banned", False))
+        CASResults = ('')
         
     results.update({'CAS': CASResults})
 
@@ -39,7 +39,7 @@ def check_small(userid):
             SpamProtectionResults = SpamProtectionResults + ("\n- 💬 Reason: {reason}").format(reason = SpamProtection['reason'])
 
     else:
-        SpamProtectionResults = ("✉ Spam Protection Banned: User not found in Records")
+        SpamProtectionResults = ('')
         
     results.update({'SpamProtection': SpamProtectionResults})
 
@@ -51,7 +51,7 @@ def check_small(userid):
         NoSpamPlusResults = ("➕ NoSpam+ Banned: {banned}\n- 💬 Reason: {reason}").format(banned = NoSpamPlus.get("is_Banned", False), reason = NoSpamPlus['reason'])
 
     else:
-        NoSpamPlusResults = ("➕ NoSpam+ Banned: {banned}").format(banned = NoSpamPlus.get("is_Banned", False))
+        NoSpamPlusResults = ("")
     
     results.update({'NoSpamPlus': NoSpamPlusResults})
 
@@ -63,7 +63,7 @@ def check_small(userid):
         SpamBlockersResults = ("🐞 SpamBlockers Banned: {banned}\n- 💬 Reason: {reason}").format(banned = SpamBlockers.get("is_Banned", False), reason = SpamBlockers['reason'])
 
     else:
-        SpamBlockersResults = ("🐞 SpamBlockers Banned: {banned}").format(banned = SpamBlockers.get("is_Banned", False))
+        SpamBlockersResults = ('')
     
     results.update({'SpamBlockers': SpamBlockersResults})
 
@@ -75,7 +75,7 @@ def check_small(userid):
         OwlAntiSpamResults = ("🦉 OwlAntiSpam Banned: {banned}\n- 📅 Date of ban (UTC): <code{date}>\n- 💬 Reason: {reason}").format(banned = OwlAntiSpam.get("is_Banned", False), date = OwlAntiSpam['date'], reason = OwlAntiSpam['reason'])
 
     else:
-        OwlAntiSpamResults = ("🦉 OwlAntiSpam Banned: {banned}").format(banned = OwlAntiSpam.get("is_Banned", False))
+        OwlAntiSpamResults = ('')
         
     results.update({'OwlAntiSpam': OwlAntiSpamResults})
 
