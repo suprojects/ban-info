@@ -11,15 +11,15 @@ class Permission(Enum):
 
 
 _permission_map = {
-    'Root': Permission.Root,
-    'Admin': Permission.Admin,
-    'User': Permission.User
+    "Root": Permission.Root,
+    "Admin": Permission.Admin,
+    "User": Permission.User
 }
 
 
 class OwlAntiSpamType:
     def __str__(self) -> str:
-        return f'<{self.__class__.__name__}: {self.__dict__}>'
+        return f"<{self.__class__.__name__}: {self.__dict__}>"
 
     def __repr__(self) -> str:
         return self.__str__()

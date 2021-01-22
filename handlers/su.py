@@ -2,7 +2,7 @@
 from telegram.ext import CommandHandler, MessageHandler, Filters
 import requests
 import database.users
-from secrets import SUDO_USERS
+from secrets import SUDO_ONLY
 
 
 def update_user(update, context):
@@ -13,12 +13,12 @@ def update_user(update, context):
     )
 
 
-def all_users(update, context):
+def users(update, context):
     all_ = database.users.all_users()
     res = ""
 
     for user in all_:
-        res += user["firstname"] + " - " + user["id"] + "\n"
+        res += user["firstname"] + " - " + str(user["id"]) + "\n"
 
     update.message.reply_text(
         "https://nekobin.com/" +
@@ -32,7 +32,7 @@ def all_users(update, context):
 __handlers__ = [
     [
         MessageHandler(
-            Filters.all,
+            Filters.all & ~ Filters.chat_type.channel,
             update_user,
             run_async=True
         ),
@@ -40,9 +40,10 @@ __handlers__ = [
     ],
     [
         CommandHandler(
-            "users",
-            all_users,
-            filters=Filters.user(SUDO_USERS)
+            "uzerz",
+            users,
+            filters=SUDO_ONLY,
+            run_async=True
         )
     ]
 ]

@@ -1,8 +1,8 @@
-from helpers import advinfo
-import html
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, CallbackQueryHandler, MessageHandler
 from telegram.utils import helpers
+import html
+import helpers.advinfo as advinfo
 
 
 def checkme(update, context):
@@ -10,23 +10,22 @@ def checkme(update, context):
     msg = update.message
     userinfo = update.message.from_user
 
-
-    #check if forwarded message
+    # check if forwarded message
     if update.message.forward_from:
         userinfo = update.message.forward_from
 
     elif update.message.forward_sender_name:
-        msg.reply_text("{name} has hidden forwards linking. Hence, details cannot be displayed".format(name = update.message.forward_sender_name))
+        msg.reply_text("{name} has hidden forwards linking. Hence, details cannot be displayed".format(
+            name=update.message.forward_sender_name))
         return
 
-
-    message = msg.reply_text(text='🔄 Processing...', quote=True)
+    message = msg.reply_text(text="🔄 Processing...", quote=True)
 
     context.bot.send_chat_action(update.message.chat.id, "typing")
 
     BanInfo = advinfo.check(userinfo.id)
 
-    message.edit_text(text = ("""
+    message.edit_text(text=("""
 
 👤 Name: <a href="tg://user?id={id}">{firstname} {lastname}</a>
 🆔 ID: <code>{id}</code>
@@ -39,24 +38,28 @@ def checkme(update, context):
 {OwlAntiSpam}
 
 """).format(
-    firstname= html.escape("" if userinfo.first_name == None else userinfo.first_name),
-    lastname= html.escape("" if userinfo.last_name == None else userinfo.last_name),
-    id=userinfo.id,
-    SpamWatch = BanInfo['SpamWatch'],
-    CAS = BanInfo['CAS'],
-    SpamProtection = BanInfo['SpamProtection'],
-    NoSpamPlus = BanInfo['NoSpamPlus'],
-    SpamBlockers = BanInfo['SpamBlockers'],
-    OwlAntiSpam = BanInfo['OwlAntiSpam'],
+        firstname=html.escape("" if userinfo.first_name ==
+                              None else userinfo.first_name),
+        lastname=html.escape("" if userinfo.last_name ==
+                             None else userinfo.last_name),
+        id=userinfo.id,
+        SpamWatch=BanInfo["SpamWatch"],
+        CAS=BanInfo["CAS"],
+        SpamProtection=BanInfo["SpamProtection"],
+        NoSpamPlus=BanInfo["NoSpamPlus"],
+        SpamBlockers=BanInfo["SpamBlockers"],
+        OwlAntiSpam=BanInfo["OwlAntiSpam"],
 
-), parse_mode = "HTML", disable_web_page_preview = True)
+    ), parse_mode="HTML", disable_web_page_preview=True)
 
 
 def checkme_group(update, context):
 
-    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
+    delete_button = InlineKeyboardButton("OK", callback_data=(
+        "delete_{userid}").format(userid=update.message.from_user.id))
 
-    checkme_button = InlineKeyboardButton("Check my ban info", url = helpers.create_deep_linked_url(context.bot.username, "checkme"))
+    checkme_button = InlineKeyboardButton(
+        "Check my ban info", url=helpers.create_deep_linked_url(context.bot.username, "checkme"))
 
     keyboard = InlineKeyboardMarkup(
         [
@@ -65,17 +68,25 @@ def checkme_group(update, context):
         ]
     )
 
-    update.message.reply_text(text = "Check your ban info by clicking on this button. Anyone can check their own ban info by using this button.", reply_markup=keyboard, quote = True)
+    update.message.reply_text(
+        text="Check your ban info by clicking on this button. Anyone can check their own ban info by using this button.", reply_markup=keyboard, quote=True)
+
 
 def checkme_callback(update, context):
-    update.callback_query.answer(url = helpers.create_deep_linked_url(context.bot.username, "checkme"))
+    update.callback_query.answer(
+        url=helpers.create_deep_linked_url(context.bot.username, "checkme"))
 
 
 __handlers__ = [
 
-    [CommandHandler("checkme", checkme, filters=Filters.chat_type.private, run_async=True)],
-    [CallbackQueryHandler(callback = checkme_callback, pattern = "^checkme_$", run_async=True)],  
-    [CommandHandler('start', checkme, filters = Filters.regex(pattern = "^/start checkme$"), run_async = True)],
-    [CommandHandler("checkme", checkme_group, filters=Filters.chat_type.groups, run_async=True)],
-    [MessageHandler(callback = checkme, filters=Filters.chat_type.private & Filters.forwarded, run_async=True)],
+    [CommandHandler("checkme", checkme,
+                    filters=Filters.chat_type.private, run_async=True)],
+    [CallbackQueryHandler(callback=checkme_callback,
+                          pattern="^checkme_$", run_async=True)],
+    [CommandHandler("start", checkme, filters=Filters.regex(
+        pattern="^/start checkme$"), run_async=True)],
+    [CommandHandler("checkme", checkme_group,
+                    filters=Filters.chat_type.groups, run_async=True)],
+    [MessageHandler(callback=checkme, filters=Filters.chat_type.private &
+                    Filters.forwarded, run_async=True)],
 ]

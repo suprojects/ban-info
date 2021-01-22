@@ -12,7 +12,7 @@ from .types import Ban, Permission, Token
 class Client:
     """Client to interface with the OwlAntiSpam API."""
 
-    def __init__(self, token: str, *, host: str = 'https://spamapi.bolverblitz.net/') -> None:
+    def __init__(self, token: str, *, host: str = "https://spamapi.bolverblitz.net/") -> None:
         """
         Args:
             token: The Authorization Token
@@ -24,7 +24,7 @@ class Client:
         self._token = self.get_self()
         self.permission = self._token.permission
 
-    def _make_request(self, path: str, method: str = 'get',
+    def _make_request(self, path: str, method: str = "get",
                       **kwargs: Dict[Any, Any]) -> Tuple[Union[Dict, str], Response]:
         """
         Make a request and handle errors
@@ -37,7 +37,7 @@ class Client:
         Returns: The json response and the request object
 
         """
-        req = self._session.request(method, f'{self._host}/{path}',
+        req = self._session.request(method, f"{self._host}/{path}",
                                     **kwargs)
         if req.status_code in [200, 201]:
             try:
@@ -53,13 +53,13 @@ class Client:
         elif req.status_code == 404:
             raise NotFoundError()
         elif req.status_code == 429:
-            raise TooManyRequests(path, req.json().get('until', 0))
+            raise TooManyRequests(path, req.json().get("until", 0))
         else:
             raise Error(req)
 
     def version(self) -> Dict[str, str]:
         """Get the API version"""
-        return self._make_request('version')[0]
+        return self._make_request("version")[0]
 
     # region Tokens
     def get_tokens(self) -> List[Token]:
@@ -69,7 +69,7 @@ class Client:
         Returns: A list of Tokens
 
         """
-        data, req = self._make_request('tokens')
+        data, req = self._make_request("tokens")
         return [Token(**token) for token in data]
 
     def create_token(self, userid: int, permission: Permission) -> Token:
@@ -83,14 +83,14 @@ class Client:
         Returns: The created Token
 
         """
-        data, req = self._make_request('tokens', method='post',
+        data, req = self._make_request("tokens", method="post",
                                        json={"id": userid,
                                              "permission": permission.name})
         return Token(**data)
 
     def get_self(self) -> Token:
         """Gets the Token that the request was made with."""
-        data, req = self._make_request('tokens/self')
+        data, req = self._make_request("tokens/self")
         return Token(**data)
 
     def get_token(self, token_id: int) -> Token:
@@ -103,7 +103,7 @@ class Client:
         Returns: The token
 
         """
-        data, req = self._make_request(f'tokens/{token_id}')
+        data, req = self._make_request(f"tokens/{token_id}")
         return Token(**data)
 
     def delete_token(self, token_id: int) -> None:
@@ -113,7 +113,7 @@ class Client:
             token_id: The id of the token
 
         """
-        self._make_request(f'tokens/{token_id}', method='delete')
+        self._make_request(f"tokens/{token_id}", method="delete")
 
     # endregion
 
@@ -125,17 +125,17 @@ class Client:
         Returns: A list of Bans
 
         """
-        data, req = self._make_request('banlist')
+        data, req = self._make_request("banlist")
         return [Ban(**ban) for ban in data]
 
     def get_bans_min(self) -> List[int]:
-        data, req = self._make_request('banlist/all')
+        data, req = self._make_request("banlist/all")
 
         if data:
             if isinstance(data, int):
                 return [data]
             else:
-                return [int(uid) for uid in data.split('\n')]
+                return [int(uid) for uid in data.split("\n")]
         else:
             return []
 
@@ -152,7 +152,7 @@ class Client:
         }
         if message:
             ban["message"] = message
-        self._make_request(f'banlist', method='post',
+        self._make_request(f"banlist", method="post",
                            json=[ban])
 
     def add_bans(self, data: List[Ban]) -> None:
@@ -162,7 +162,7 @@ class Client:
             data: List of Ban objects
         """
         _data = [{"id": d.id, "reason": d.reason} for d in data]
-        self._make_request(f'banlist', method='post',
+        self._make_request(f"banlist", method="post",
                            json=_data)
 
     def get_ban(self, user_id: int) -> Union[Ban, bool]:
@@ -175,20 +175,20 @@ class Client:
 
         """
         try:
-            data, req = self._make_request(f'banlist/{user_id}')
+            data, req = self._make_request(f"banlist/{user_id}")
             return Ban(**data)
         except NotFoundError as err:
             return False
 
     def delete_ban(self, user_id: int) -> None:
         """Remove a ban"""
-        self._make_request(f'banlist/{user_id}', method='delete')
+        self._make_request(f"banlist/{user_id}", method="delete")
 
     # endregion
 
     # region Stats
     def stats(self) -> Dict[str, int]:
         """Get ban stats"""
-        data, req = self._make_request(f'stats')
+        data, req = self._make_request(f"stats")
         return data
     # endregion
