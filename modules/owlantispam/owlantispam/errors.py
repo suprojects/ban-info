@@ -15,7 +15,7 @@ class Error(OwlAntiSpamError):
         self.status_code = req.status_code
         self.text = req.text
         self.url = req.url
-        Exception.__init__(self, f'code: {self.status_code} body: `{self.text}` url: {self.url}')
+        Exception.__init__(self, f"code: {self.status_code} body: `{self.text}` url: {self.url}")
 
 
 class UnauthorizedError(OwlAntiSpamError):
@@ -38,4 +38,5 @@ class TooManyRequests(OwlAntiSpamError):
     def __init__(self, method, until: int) -> None:
         self.method = method
         self.until = datetime.fromtimestamp(until)
-        Exception.__init__(self, f"Too Many Requests for method `{method}`. Try again in {self.until - datetime.now()}")
+        Exception.__init__(
+            self, f"Too Many Requests for method `{method}`. Try again in {self.until - datetime.now()}")

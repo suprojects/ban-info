@@ -230,7 +230,7 @@ module-name-hint=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
 # Regular expression matching correct module names
 module-rgx=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
 
-# Colon-delimited sets of names that determine each other's naming style when
+# Colon-delimited sets of names that determine each other"s naming style when
 # the name regexes allow several styles.
 name-group=
 
@@ -263,7 +263,7 @@ indent-after-paren=4
 
 # String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
 # tab).
-indent-string='    '
+indent-string="    "
 
 # Maximum number of characters on a single line.
 max-line-length=100
@@ -339,7 +339,7 @@ spelling-store-unknown-words=no
 contextmanager-decorators=contextlib.contextmanager
 
 # List of members which are set dynamically and missed by pylint inference
-# system, and so shouldn't trigger E1101 when accessed. Python regular
+# system, and so shouldn"t trigger E1101 when accessed. Python regular
 # expressions are accepted.
 generated-members=Session,scoped_session
 

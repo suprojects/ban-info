@@ -10,7 +10,7 @@ if __name__ == "__main__":
     from threading import Thread
     from telegram.ext import CommandHandler, Filters
     from handlers import all_handlers
-    from secrets import SUDO_USERS
+    from secrets import SUDO_ONLY, SUDO_USERS
     import logging
 
     logging.basicConfig(
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             )
 
     dp.add_handler(
-        CommandHandler("r", restart, filters=Filters.user(SUDO_USERS))
+        CommandHandler("r", restart, filters=SUDO_ONLY)
     )
 
     updater.start_polling(clean=True)

@@ -21,8 +21,10 @@ def check(update, context):
     SpamBlockers = sb.check(userinfo.id)
     OwlAntiSpam = owl.check(userinfo.id)
 
-    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
-    more_info = InlineKeyboardButton("Detailed Ban Info", callback_data = ("check_{userid}").format(userid = userinfo.id))
+    delete_button = InlineKeyboardButton("OK", callback_data=(
+        "delete_{userid}").format(userid=update.message.from_user.id))
+    more_info = InlineKeyboardButton("Detailed Ban Info", callback_data=(
+        "check_{userid}").format(userid=userinfo.id))
 
     buttons = InlineKeyboardMarkup(
         [
@@ -31,7 +33,7 @@ def check(update, context):
         ]
     )
 
-    message.edit_text(text = ("""
+    message.edit_text(text=("""
 
 👤 Name: <a href="tg://user?id={id}">{firstname} {lastname}</a>
 🆔 ID: <code>{id}</code>
@@ -46,8 +48,10 @@ def check(update, context):
 
 ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
 """).format(
-        firstname=escape("" if userinfo.first_name == None else userinfo.first_name),
-        lastname=escape("" if userinfo.last_name == None else userinfo.last_name),
+        firstname=escape("" if userinfo.first_name ==
+                         None else userinfo.first_name),
+        lastname=escape("" if userinfo.last_name ==
+                        None else userinfo.last_name),
         id=userinfo.id,
         initid=usr.id,
         initfirstname=escape(usr.first_name),
@@ -56,29 +60,35 @@ def check(update, context):
         SPB=SpamProtection.get("is_Banned", "Not in records"),
         SP=SpamProtection.get("is_Potential", "Not in records"),
         NSP=NoSpamPlus.get("is_Banned", False),
-        SB=SpamBlockers.get('is_Banned', False),
-        OWL=OwlAntiSpam.get('is_Banned', False)
+        SB=SpamBlockers.get("is_Banned", False),
+        OWL=OwlAntiSpam.get("is_Banned", False)
 
-    ), parse_mode = 'HTML', reply_markup=buttons)
+    ), parse_mode="HTML", reply_markup=buttons)
 
 
 def no_reply(update, context):
-    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid = update.message.from_user.id))
-    update.message.reply_text("Reply to a user's message to get the info", reply_markup = InlineKeyboardMarkup([[delete_button]]))
+    delete_button = InlineKeyboardButton("OK", callback_data=(
+        "delete_{userid}").format(userid=update.message.from_user.id))
+    update.message.reply_text("Reply to a user's message to get the info",
+                              reply_markup=InlineKeyboardMarkup([[delete_button]]))
 
 
 def check_callback(update, context):
-    
-    userid = int(update.callback_query.data.replace('check_', ''))
+
+    userid = int(update.callback_query.data.replace("check_", ""))
 
     BanInfo = advinfo.check_small(userid)
-    BanText = ("{SpamWatch}\n{CAS}\n{SpamProtection}\n{NoSpamPlus}\n{SpamBlockers}\n{OwlAntiSpam}").format(SpamWatch = BanInfo['SpamWatch'], CAS = BanInfo['CAS'], SpamProtection = BanInfo['SpamProtection'], NoSpamPlus = BanInfo['NoSpamPlus'], SpamBlockers = BanInfo['SpamBlockers'], OwlAntiSpam = BanInfo['OwlAntiSpam'])
+    BanText = ("{SpamWatch}\n{CAS}\n{SpamProtection}\n{NoSpamPlus}\n{SpamBlockers}\n{OwlAntiSpam}").format(
+        SpamWatch=BanInfo["SpamWatch"], CAS=BanInfo["CAS"], SpamProtection=BanInfo["SpamProtection"], NoSpamPlus=BanInfo["NoSpamPlus"], SpamBlockers=BanInfo["SpamBlockers"], OwlAntiSpam=BanInfo["OwlAntiSpam"])
 
-    update.callback_query.answer(text = BanText, show_alert = True)
+    update.callback_query.answer(text=BanText, show_alert=True)
 
 
 __handlers__ = [
-    [CommandHandler("check", check, filters=Filters.chat_type.groups & Filters.reply, run_async=True)],
-    [CommandHandler("check", no_reply, filters=Filters.chat_type.groups & ~ Filters.reply, run_async=True)],
-    [CallbackQueryHandler(pattern = "^check_", callback = check_callback, run_async=True)],
+    [CommandHandler("check", check, filters=Filters.chat_type.groups &
+                    Filters.reply, run_async=True)],
+    [CommandHandler("check", no_reply, filters=Filters.chat_type.groups &
+                    ~ Filters.reply, run_async=True)],
+    [CallbackQueryHandler(
+        pattern="^check_", callback=check_callback, run_async=True)],
 ]
