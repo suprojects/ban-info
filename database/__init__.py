@@ -1,5 +1,5 @@
 from pymongo import MongoClient
+from secrets import URI
 
-URI = "mongodb+srv://roj:qwertyuiop@cluster0.pmqx1.mongodb.net/ban"
 client = MongoClient(URI)
 db = client["ban"]
