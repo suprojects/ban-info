@@ -4,7 +4,7 @@ users = db["users"]
 
 
 def update_user(id, username, firstname, lastname):
-    username = username.lower()
+    username = username.lower() if username else username
 
     users.update_one(
         {"id": id},
