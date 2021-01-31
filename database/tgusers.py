@@ -4,14 +4,13 @@ users = db["users"]
 
 
 def update_user(from_user):
-
     users.update_one(
         {"id": from_user.id},
         {
             "$set": {
-                "username": from_user.username if from_user.username else None,
+                "username": from_user.username,
                 "firstname": from_user.first_name,
-                "lastname": from_user.last_name if from_user.last_name else None,
+                "lastname": from_user.last_name,
             }
         },
         upsert=True,

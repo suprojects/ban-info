@@ -1,24 +1,16 @@
-import os
+
 from telegram.ext import Filters
 
-if os.path.exists("tokens.py"):
+try:
+    from config import *
+except ImportError:
+    from os import environ
+    SPAMWATCH_TOKEN = environ.get("SPAMWATCH")
+    NOSPAMPLUS_TOKEN = environ.get("NOSPAMPLUS")
+    BOT_TOKEN = environ.get("BOT_TOKEN")
+    SUDO_USERS = list(map(int, environ.get("SUDO_USERS").split()))
+    LOG_CHAT = environ.get("LOG_ID")
+    OWLANTISPAM_TOKEN = environ.get("OWLANTISPAM")
+    URI = environ.get("URI")
 
-    from tokens import *
-
-    os.environ["SPAMWATCH"] = SPAMWATCH
-    os.environ["NOSPAMPLUS"] = NOSPAMPLUS
-    os.environ["BOT_TOKEN"] = BOT_TOKEN
-    os.environ["SUDO_USERS"] = SUDO_USERS
-    os.environ["LOG_ID"] = LOG_ID
-    os.environ["OWLANTISPAM"] = OWLANTISPAM
-    os.environ["URI"] = URI
-
-
-SPAMWATCH_TOKEN = os.environ.get("SPAMWATCH")
-NOSPAMPLUS_TOKEN = os.environ.get("NOSPAMPLUS")
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
-SUDO_USERS = list(map(int, os.environ.get("SUDO_USERS").split()))
-LOG_CHAT = os.environ.get("LOG_ID")
-OWLANTISPAM_TOKEN = os.environ.get("OWLANTISPAM")
 SUDO_ONLY = Filters.user(SUDO_USERS)
-URI = os.environ.get("URI")

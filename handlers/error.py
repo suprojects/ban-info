@@ -18,18 +18,9 @@ def error(update, context):
     except:
         pass
 
-    context.bot.send_message(chat_id=LOG_CHAT, text=(f"""
-
-#{context.bot.username}
-
-
-Error:
-{context.error}
-
-Update:
-{update}
-
-"""))
+    context.bot.send_message(
+        LOG_CHAT, f"#{context.bot.username}\n\n\nError:\n{context.error}\n\nUpdate:\n{update}"
+    )
 
 
 __handlers__ = [
