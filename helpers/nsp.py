@@ -5,19 +5,24 @@ client = Connect(NOSPAMPLUS_TOKEN)
 
 
 def check(userid):
-    results = {}
-    userid = int(userid)
 
-    userinfo = client.is_banned(userid)
+    try:
+        results = {}
+        userid = int(userid)
 
-    if userinfo:
+        userinfo = client.is_banned(userid)
 
-        results.update({
-                "is_Banned": userinfo.banned,
-                "reason": userinfo.reason
-            })
+        if userinfo:
 
-    else:
-        pass
+            results.update({
+                    "is_Banned": userinfo.banned,
+                    "reason": userinfo.reason
+                })
 
-    return results
+        else:
+            pass
+
+        return results
+
+    except:
+        return {'is_Banned': 'Error'}

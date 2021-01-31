@@ -3,23 +3,27 @@ from datetime import datetime
 
 def check(userid):
 
-    userid = int(userid)
-    results = {}
+    try:
+        userid = int(userid)
+        results = {}
 
-    userinfo = requests.get("https://api.cas.chat/check?user_id={}".format(userid)).json()
+        userinfo = requests.get("https://api.cas.chat/check?user_id={}".format(userid)).json()
 
-    if userinfo["ok"]:
-        BanDate = userinfo["result"]["time_added"]
-        BanDate = datetime.fromisoformat(BanDate.rstrip(BanDate[-1]))
+        if userinfo["ok"]:
+            BanDate = userinfo["result"]["time_added"]
+            BanDate = datetime.fromisoformat(BanDate.rstrip(BanDate[-1]))
 
-        results.update({
-                "is_Banned": userinfo["ok"],
-                "offences": userinfo["result"]["offenses"],
-                "date": BanDate,
-                "link": ("https://cas.chat/query?u={userid}").format(userid=userid)
-            })
+            results.update({
+                    "is_Banned": userinfo["ok"],
+                    "offences": userinfo["result"]["offenses"],
+                    "date": BanDate,
+                    "link": ("https://cas.chat/query?u={userid}").format(userid=userid)
+                })
 
-    else:
-        pass
+        else:
+            pass
 
-    return results
+        return results
+    
+    except:
+        return {'is_Banned': 'Error'}

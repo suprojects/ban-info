@@ -5,22 +5,27 @@ client = owlantispam.Client(OWLANTISPAM_TOKEN)
 
 
 def check(userid):
-    userid = int(userid)
-    results = {}
 
-    userinfo = client.get_ban(userid)
+    try:
+        userid = int(userid)
+        results = {}
 
-    if userinfo:
-        results.update({
-            "id": userinfo.id,
-            "is_Banned": True,
-            "date": userinfo.date,
-            "reason": userinfo.reason,
-            "admin": userinfo.admin,
-            "message": userinfo.message
-        })
+        userinfo = client.get_ban(userid)
 
-    else:
-        pass
+        if userinfo:
+            results.update({
+                "id": userinfo.id,
+                "is_Banned": True,
+                "date": userinfo.date,
+                "reason": userinfo.reason,
+                "admin": userinfo.admin,
+                "message": userinfo.message
+            })
 
-    return results
+        else:
+            pass
+
+        return results
+
+    except:
+        return {'is_Banned': 'Error'}
