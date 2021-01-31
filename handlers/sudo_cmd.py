@@ -17,7 +17,7 @@ def eval_cmd(update, context):
 def update_user(update, context):
     usr = update.effective_user
 
-    tgusers.update_user(update.message.from_user)
+    tgusers.update_user(usr)
 
 
 def tguserlist(update, context):
