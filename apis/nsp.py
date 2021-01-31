@@ -15,14 +15,18 @@ def check(userid):
         if userinfo:
 
             results.update({
-                    "is_Banned": userinfo.banned,
-                    "reason": userinfo.reason
+                "success": True,
+                "is_Banned": userinfo.banned,
+                "reason": userinfo.reason
                 })
 
         else:
-            pass
+            results.update({
+                "success": True,
+                "is_Banned": False
+            })
 
         return results
 
     except:
-        return {'is_Banned': 'Error'}
+        return {'success': False}

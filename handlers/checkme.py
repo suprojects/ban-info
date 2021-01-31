@@ -2,7 +2,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, CallbackQueryHandler, MessageHandler
 from telegram.utils import helpers
 import html
-import helpers.advinfo as advinfo
+import apis.advinfo as advinfo
 
 
 def checkme(update, context):

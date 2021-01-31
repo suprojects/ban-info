@@ -14,16 +14,20 @@ def check(userid):
             BanDate = datetime.fromisoformat(BanDate.rstrip(BanDate[-1]))
 
             results.update({
-                    "is_Banned": userinfo["ok"],
-                    "offences": userinfo["result"]["offenses"],
-                    "date": BanDate,
-                    "link": ("https://cas.chat/query?u={userid}").format(userid=userid)
+                "success": True,
+                "is_Banned": userinfo["ok"],
+                "offences": userinfo["result"]["offenses"],
+                "date": BanDate,
+                "link": ("https://cas.chat/query?u={userid}").format(userid=userid)
                 })
 
         else:
-            pass
+            results.update({
+                "success": True,
+                "is_Banned": False,
+            })
 
         return results
     
     except:
-        return {'is_Banned': 'Error'}
+        return {'success': False}

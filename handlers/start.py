@@ -4,6 +4,7 @@ from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.utils import helpers
 
+from database import botusers
 
 def start(update, context):
     usr = update.message.from_user
@@ -35,6 +36,8 @@ I can currently search in:
 Send /help to learn more about me and my commands.
 """).format(id=usr.id, firstname=escape(usr.first_name), botname=context.bot.first_name), parse_mode="HTML", reply_markup=BUTTON_MARKUP, disable_web_page_preview=True)
 
+    botusers.new_user(usr)
+
 
 def start_group(update, context):
     delete_button = InlineKeyboardButton("OK", callback_data=(
@@ -44,8 +47,6 @@ def start_group(update, context):
 
 
 __handlers__ = [
-    [CommandHandler("start", start, filters=Filters.chat_type.private &
-                    Filters.regex("^/start$"), run_async=True)],
-    [CommandHandler("start", start_group,
-                    filters=Filters.chat_type.groups, run_async=True)]
+    [CommandHandler("start", start, filters=Filters.chat_type.private & Filters.regex("^/start$"), run_async=True)],
+    [CommandHandler("start", start_group, filters=Filters.chat_type.groups, run_async=True)],
 ]

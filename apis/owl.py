@@ -1,7 +1,7 @@
-import spamwatch
-from secrets import SPAMWATCH_TOKEN
+import owlantispam
+from secrets import OWLANTISPAM_TOKEN
 
-client = spamwatch.Client(SPAMWATCH_TOKEN)
+client = owlantispam.Client(OWLANTISPAM_TOKEN)
 
 
 def check(userid):
@@ -14,6 +14,7 @@ def check(userid):
 
         if userinfo:
             results.update({
+                "success": True,
                 "id": userinfo.id,
                 "is_Banned": True,
                 "date": userinfo.date,
@@ -23,9 +24,12 @@ def check(userid):
             })
 
         else:
-            pass
+            results.update({
+                "success": True,
+                "is_Banned": False
+            })
 
         return results
 
     except:
-        return {'is_Banned': 'Error'}
+        return {'success': False}

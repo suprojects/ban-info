@@ -2,3 +2,4 @@ tokens.py
 __pycache__/
 venv/
 temp/
+.vscode/

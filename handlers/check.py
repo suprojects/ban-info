@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
-from helpers import nsp, cas, sp, sw, sb, owl
-from helpers import advinfo
+from apis import nsp, cas, sp, sw, sb, owl
+from apis import advinfo
 from html import escape
 from re import search
 
@@ -11,8 +11,6 @@ def check(update, context):
     userinfo = msg.reply_to_message.from_user
 
     message = msg.reply_text("🔄 Processing...")
-
-    context.bot.send_chat_action(update.message.chat.id, "typing")
 
     SpamWatch = sw.check(userinfo.id)
     CAS = cas.check(userinfo.id)
@@ -48,20 +46,18 @@ def check(update, context):
 
 ✅ Initiated by <a href="tg://user?id={initid}">{initfirstname}</a>
 """).format(
-        firstname=escape("" if userinfo.first_name ==
-                         None else userinfo.first_name),
-        lastname=escape("" if userinfo.last_name ==
-                        None else userinfo.last_name),
-        id=userinfo.id,
-        initid=usr.id,
-        initfirstname=escape(usr.first_name),
-        SW=SpamWatch.get("is_Banned", False),
-        CAS=CAS.get("is_Banned", False),
-        SPB=SpamProtection.get("is_Banned", "Not in records"),
-        SP=SpamProtection.get("is_Potential", "Not in records"),
-        NSP=NoSpamPlus.get("is_Banned", False),
-        SB=SpamBlockers.get("is_Banned", False),
-        OWL=OwlAntiSpam.get("is_Banned", False)
+        firstname = escape("" if userinfo.first_name == None else userinfo.first_name),
+        lastname = escape("" if userinfo.last_name == None else userinfo.last_name),
+        id = userinfo.id,
+        initid = usr.id,
+        initfirstname = escape(usr.first_name),
+        SW = SpamWatch['is_Banned'] if SpamWatch['success'] else "error",
+        CAS = CAS['is_Banned'] if CAS['success'] else "error",
+        SPB = SpamProtection['is_Banned'] if SpamProtection['success'] else "error",
+        SP = SpamProtection['is_Potential'] if SpamProtection['success'] else "error",
+        NSP = NoSpamPlus['is_Banned'] if NoSpamPlus['success'] else 'error',
+        SB = SpamBlockers['is_Banned'] if NoSpamPlus['success'] else 'error',
+        OWL = OwlAntiSpam['is_Banned'] if OwlAntiSpam['success'] else 'error',
 
     ), parse_mode="HTML", reply_markup=buttons)
 
@@ -88,10 +84,7 @@ def advcheck_error(update, context):
     update.callback_query.answer(text = 'In maintenance ⚠', show_alert = True)
 
 __handlers__ = [
-    [CommandHandler("check", check, filters=Filters.chat_type.groups &
-                    Filters.reply, run_async=True)],
-    [CommandHandler("check", no_reply, filters=Filters.chat_type.groups &
-                    ~ Filters.reply, run_async=True)],
-    [CallbackQueryHandler(
-        pattern="^check_", callback=advcheck_error, run_async=True)],
+    [CommandHandler("check", check, filters=Filters.chat_type.groups & Filters.reply, run_async=True)],
+    [CommandHandler("check", no_reply, filters=Filters.chat_type.groups & ~Filters.reply, run_async=True)],
+    [CallbackQueryHandler(pattern="^check_", callback = check_callback, run_async=True)],
 ]

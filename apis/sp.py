@@ -1,6 +1,5 @@
 import requests
 
-
 def check(userid):
 
     try: 
@@ -24,9 +23,13 @@ def check(userid):
             )
 
         else:
-            pass
+            results.update({
+                'success': True,
+                "is_Banned": False,
+                "is_Potential": False,
+                })
+
+        return results
 
     except:
-        return {'is_Banned': 'Error', 'is_Potential': 'Error'}
-
-
+        return {'success': False}
