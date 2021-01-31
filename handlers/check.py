@@ -84,11 +84,14 @@ def check_callback(update, context):
     update.callback_query.answer(text=BanText, show_alert=True)
 
 
+def advcheck_error(update, context):
+    update.callback_query.answer(text = 'In maintenance ⚠', show_alert = True)
+
 __handlers__ = [
     [CommandHandler("check", check, filters=Filters.chat_type.groups &
                     Filters.reply, run_async=True)],
     [CommandHandler("check", no_reply, filters=Filters.chat_type.groups &
                     ~ Filters.reply, run_async=True)],
     [CallbackQueryHandler(
-        pattern="^check_", callback=check_callback, run_async=True)],
+        pattern="^check_", callback=advcheck_error, run_async=True)],
 ]
