@@ -22,7 +22,9 @@ if __name__ == "__main__":
         if "-r" in arg:
             for SUDO_USER in SUDO_USERS:
                 updater.bot.send_message(
-                    SUDO_USER, arg.replace("-r", ""))
+                    SUDO_USER, arg.replace("-r", "")
+                )
+            break
 
     def stop_and_restart(name):
         updater.stop()
@@ -31,8 +33,12 @@ if __name__ == "__main__":
         for i in range(len(args)):
             if "-r" in args[i]:
                 del args[i]
-        os.execl(sys.executable, sys.executable, *args,
-                 f"Bot restarted successfully. Initialted by -r{name}.")
+        os.execl(
+            sys.executable,
+            sys.executable,
+            *args,
+            f"Bot restarted successfully. Initialted by -r{name}."
+        )
 
     def restart(update, context):
         update.message.reply_text("Bot is restarting...")
