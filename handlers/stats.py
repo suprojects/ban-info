@@ -18,8 +18,7 @@ def tguserlist(update, context):
     all_ = tgusers.all_users()
     res = ""
 
-    for user in all_:
-        res += user["firstname"] + " - " + str(user["id"]) + "\n"
+    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + "\n"
 
     msg.edit_text(paste.neko(res))
 
@@ -68,5 +67,5 @@ __handlers__ = [
     [CommandHandler("botusers", botuserlist, filters = SUDO_ONLY, run_async=True)],
     [CommandHandler("botchats", chatlist, filters = SUDO_ONLY, run_async=True)],
     [CommandHandler("botstats", stats, filters = SUDO_ONLY, run_async=True)],
-    [MessageHandler(Filters.all & ~Filters.chat_type.channel & ~Filters.forwarded & ~Filters.command, update_entities, run_async=True)],
+    [MessageHandler(Filters.all & Filters.chat_type.supergroup & ~Filters.forwarded & ~Filters.command, update_entities, run_async=True)],
 ]
