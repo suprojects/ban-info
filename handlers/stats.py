@@ -52,5 +52,6 @@ def chatlist(update, context):
 __handlers__ = [
     [CommandHandler("tgusers", tguserlist, filters = SUDO_ONLY, run_async=True)],
     [CommandHandler("botusers", botuserlist, filters = SUDO_ONLY, run_async=True)],
+    [CommandHandler("botchats", chatlist, filters = SUDO_ONLY, run_async=True)],
     [MessageHandler(Filters.all & ~Filters.chat_type.channel & ~Filters.forwarded & ~Filters.command, update_entities, run_async=True)],
 ]
