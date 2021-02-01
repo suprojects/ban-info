@@ -16,10 +16,5 @@ def update_chat(chat_entity):
 def remove_chat(chatid):
     chats.delete_one({"id": chatid})
 
-
-def migrate_chat(oldchatid, newchatid):
-    chats.update_one({"id": int(oldchatid)}, {'$set': {'id': int(newchatid)}})
-
-
 def all_chats():
     return list(chats.find({}, {'_id': 0}))
