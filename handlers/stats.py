@@ -48,10 +48,25 @@ def chatlist(update, context):
     msg.edit_text(paste.neko(res))
 
 
+def stats(update, context):
+    msg = update.message.reply_text('🔄')
+
+    msg.edit_text(text = f'''
+Stats of {context.bot.first_name}
+
+👤 @{context.bot.username}
+🆔 <code>{context.bot.id}</code>
+
+👀 Users seen: <code>{len(tgusers.all_users())}</code>
+🤖 Bot users: <code>{len(botusers.bot_users())}</code>
+👥 Groups: <code>{len(botchats.all_chats())}</code>
+
+''', parse_mode = 'HTML')
 
 __handlers__ = [
     [CommandHandler("tgusers", tguserlist, filters = SUDO_ONLY, run_async=True)],
     [CommandHandler("botusers", botuserlist, filters = SUDO_ONLY, run_async=True)],
     [CommandHandler("botchats", chatlist, filters = SUDO_ONLY, run_async=True)],
+    [CommandHandler("botstats", stats, filters = SUDO_ONLY, run_async=True)],
     [MessageHandler(Filters.all & ~Filters.chat_type.channel & ~Filters.forwarded & ~Filters.command, update_entities, run_async=True)],
 ]
