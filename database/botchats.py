@@ -22,4 +22,4 @@ def migrate_chat(oldchatid, newchatid):
 
 
 def all_chats():
-    return list(chats.find())
+    return list(chats.find({}, {'_id': 0}))

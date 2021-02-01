@@ -18,7 +18,7 @@ def update_user(from_user):
 
 
 def all_users():
-    return list(users.find())
+    return list(users.find({}, {'_id': 0}))
 
 
 def get_id_by_username(username):

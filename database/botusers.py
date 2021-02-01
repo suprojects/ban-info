@@ -24,4 +24,4 @@ def remove_user(userid):
 
 
 def bot_users():
-    return list(botusers.find())
+    return list(botusers.find({}, {'_id': 0}))
