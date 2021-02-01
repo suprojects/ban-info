@@ -5,10 +5,8 @@ from utils import paste
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
 def update_entities(update, context):
-    usr, cht = update.effective_user, update.effective_chat
-
-    tgusers.update_user(usr)
-    botchats.update_chat(cht)
+    tgusers.update_user(update.effective_user)
+    botchats.update_chat(update.effective_chat)
     
 
 def tguserlist(update, context):
