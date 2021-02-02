@@ -18,7 +18,7 @@ def check(userid):
                 "is_Banned": userinfo["ok"],
                 "offences": userinfo["result"]["offenses"],
                 "date": BanDate,
-                "link": ("https://cas.chat/query?u={userid}").format(userid=userid)
+                "link": f"https://cas.chat/query?u={userid}"
                 })
 
         else:

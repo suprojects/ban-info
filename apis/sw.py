@@ -14,7 +14,7 @@ def check(userid):
 
         if userinfo:
             results.update({
-                'success': True,
+                "success": True,
                 "id": userinfo.id,
                 "is_Banned": True,
                 "date": userinfo.date,
