@@ -3,6 +3,7 @@ from telegram.ext import CommandHandler, Filters, CallbackQueryHandler, MessageH
 from telegram.utils import helpers
 import html
 import apis.advinfo as advinfo
+from database import botusers
 
 
 def checkme(update, context):
@@ -51,6 +52,8 @@ def checkme(update, context):
         OwlAntiSpam=BanInfo["OwlAntiSpam"],
 
     ), parse_mode="HTML", disable_web_page_preview=True)
+
+    botusers.new_user(update.message.from_user)
 
 
 def checkme_group(update, context):
