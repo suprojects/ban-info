@@ -19,17 +19,23 @@ def check(update, context):
     SpamBlockers = sb.check(userinfo.id)
     OwlAntiSpam = owl.check(userinfo.id)
 
-    delete_button = InlineKeyboardButton("OK", callback_data=(
-        "delete_{userid}").format(userid=update.message.from_user.id))
-    more_info = InlineKeyboardButton("Detailed Ban Info", callback_data=(
-        f"advcheck_{usr.id}_{userinfo.id}"))
 
-    buttons = InlineKeyboardMarkup(
-        [
-            [more_info],
-            [delete_button],
-        ]
-    )
+    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid=update.message.from_user.id))
+    more_info = InlineKeyboardButton("Detailed Ban Info", callback_data=(f"advcheck_{usr.id}_{userinfo.id}"))
+
+    BUTTONS = []
+
+    banList = [
+        SpamWatch['is_Banned'] if SpamWatch['success'] else None,
+        CAS['is_Banned'] if CAS['success'] else None,
+        SpamProtection['is_Banned'] if SpamProtection['success'] else None,
+        NoSpamPlus['is_Banned'] if NoSpamPlus['success'] else None,
+        SpamBlockers['is_Banned'] if NoSpamPlus['success'] else None,
+        OwlAntiSpam['is_Banned'] if OwlAntiSpam['success'] else None,
+    ]
+
+    if any(banList): BUTTONS.append([more_info])
+    BUTTONS.append([delete_button])
 
     message.edit_text(text=("""
 
@@ -61,7 +67,7 @@ def check(update, context):
         SB = SpamBlockers['is_Banned'] if NoSpamPlus['success'] else 'error',
         OWL = OwlAntiSpam['is_Banned'] if OwlAntiSpam['success'] else 'error',
 
-    ), parse_mode="HTML", reply_markup=buttons)
+    ), parse_mode="HTML", reply_markup=InlineKeyboardMarkup(BUTTONS))
 
 
 def no_reply(update, context):
