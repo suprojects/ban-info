@@ -1,9 +1,10 @@
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
-from apis import nsp, cas, sp, sw, sb, owl
-from utils import advinfo
 from html import escape
 from re import search
+
+from apis import cas, nsp, owl, sb, sp, sw
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import CallbackQueryHandler, CommandHandler, Filters
+from utils import advinfo
 
 
 def check(update, context):
@@ -20,10 +21,8 @@ def check(update, context):
     OwlAntiSpam = owl.check(userinfo.id)
 
 
-    delete_button = InlineKeyboardButton("OK", callback_data=("delete_{userid}").format(userid=update.message.from_user.id))
-    more_info = InlineKeyboardButton("Detailed Ban Info", callback_data=(f"advcheck_{usr.id}_{userinfo.id}"))
-
     BUTTONS = []
+
 
     banList = [
         SpamWatch['is_Banned'] if SpamWatch['success'] else None,
@@ -34,8 +33,11 @@ def check(update, context):
         OwlAntiSpam['is_Banned'] if OwlAntiSpam['success'] else None,
     ]
 
-    if any(banList): BUTTONS.append([more_info])
-    BUTTONS.append([delete_button])
+    #moreinfo button
+    if any(banList): BUTTONS.append([InlineKeyboardButton("Detailed Ban Info", callback_data=(f"advcheck_{usr.id}_{userinfo.id}"))])
+    
+    #delete button
+    BUTTONS.append([InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))])
 
     message.edit_text(text=("""
 
@@ -71,10 +73,8 @@ def check(update, context):
 
 
 def no_reply(update, context):
-    delete_button = InlineKeyboardButton("OK", callback_data=(
-        "delete_{userid}").format(userid=update.message.from_user.id))
-    update.message.reply_text("Reply to a user's message to get the info",
-                              reply_markup=InlineKeyboardMarkup([[delete_button]]))
+    delete_button = InlineKeyboardButton("OK", callback_data=(f"delete_{update.message.from_user.id}"))
+    update.message.reply_text("Reply to a user's message to get the info", reply_markup=InlineKeyboardMarkup([[delete_button]]))
 
 
 def check_callback(update, context):
@@ -97,7 +97,7 @@ def check_callback(update, context):
 
 #Add basic details
 
-    text += f"{qry.message.text.splitlines()[0]}\n{qry.message.text.splitlines()[1]}\n{qry.message.text.splitlines()[2]}\n\n{advinfo.check(userid)}"
+    text += f"{qry.message.text.splitlines()[0]}\n{qry.message.text.splitlines()[1]}\n{qry.message.text.splitlines()[2]}\n\n{advinfo.check(userid)}\n✅ Initiated by <a href='tg://user?id={attr[1]}'>{qry.from_user.first_name}</a>"
 
     BUTTONS = [[InlineKeyboardButton("OK", callback_data=(f"delete_{attr[1]}"))]]
 
