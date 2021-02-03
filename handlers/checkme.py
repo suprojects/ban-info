@@ -1,6 +1,6 @@
 import html
 
-import apis.advinfo as advinfo
+import utils.advinfo as advinfo
 from database import botusers
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (CallbackQueryHandler, CommandHandler, Filters,

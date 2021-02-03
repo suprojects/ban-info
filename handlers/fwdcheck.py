@@ -1,6 +1,6 @@
 import html
 
-from apis import advinfo
+from utils import advinfo
 from database import botusers
 from telegram.ext import Filters, MessageHandler
 

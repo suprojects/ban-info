@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
 from apis import nsp, cas, sp, sw, sb, owl
-from apis import advinfo
+from utils import advinfo
 from html import escape
 from re import search
 
@@ -109,6 +109,5 @@ def advcheck_error(update, context):
 
 __handlers__ = [
     [CommandHandler("check", check, filters=Filters.chat_type.groups & Filters.reply, run_async=True)],
-    [CommandHandler("check", no_reply, filters=Filters.chat_type.groups & ~Filters.reply, run_async=True)],
     [CallbackQueryHandler(pattern="^advcheck_", callback = check_callback, run_async=True)],
 ]

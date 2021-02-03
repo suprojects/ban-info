@@ -5,7 +5,6 @@ def check(userid):
     userid = int(userid)
     text = str()
 
-
 #SpamWatch
 
     SpamWatch = sw.check(userid)
