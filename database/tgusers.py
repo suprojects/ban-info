@@ -21,11 +21,11 @@ def all_users():
     return list(users.find({}, {'id': 1, 'username': 1, 'firstname': 1, 'lastname': 1}))
 
 
-def get_id_by_username(username):
+def get_by_username(username):
     username = username.lower()
 
     return users.find_one({"username": username}, {'id': 1, 'username': 1, 'firstname': 1, 'lastname': 1})
 
 
-def get_username_by_id(userid):
+def get_by_id(userid):
     return users.find_one({"userid": userid}, {'id': 1, 'username': 1, 'firstname': 1, 'lastname': 1})
