@@ -17,4 +17,4 @@ def remove_chat(chatid):
     chats.delete_one({"id": chatid})
 
 def all_chats():
-    return list(chats.find({}, {'_id': 0}))
+    return list(chats.find({}, {'title': 1, 'id': 1}))
