@@ -24,5 +24,5 @@ def error(update, context):
 
 
 __handlers__ = [
-    #["error", error]
+    ["error", error]
 ]
