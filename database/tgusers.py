@@ -1,4 +1,5 @@
 from database import db
+import re
 
 users = db["users"]
 
@@ -18,14 +19,12 @@ def update_user(from_user):
 
 
 def all_users():
-    return list(users.find({}, {'id': 1, 'username': 1, 'firstname': 1, 'lastname': 1}))
+    return list(users.find({}, {'_id': 0}))
 
 
 def get_by_username(username):
-    username = username.lower()
-
-    return users.find_one({"username": username}, {'id': 1, 'username': 1, 'firstname': 1, 'lastname': 1})
+    return users.find_one({"username": re.compile(username, re.IGNORECASE)}, {'_id': 0})
 
 
 def get_by_id(userid):
-    return users.find_one({"userid": userid}, {'id': 1, 'username': 1, 'firstname': 1, 'lastname': 1})
+    return users.find_one({"id": userid}, {'_id': 0})
