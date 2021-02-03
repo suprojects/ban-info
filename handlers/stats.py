@@ -1,8 +1,9 @@
-from database import tgusers, botusers, botchats
 from secrets import SUDO_ONLY
+
+from database import botchats, botusers, tgusers
+from telegram.ext import CommandHandler, Filters, MessageHandler
 from utils import paste
 
-from telegram.ext import CommandHandler, MessageHandler, Filters
 
 def update_entities(update, context):
     tgusers.update_user(update.effective_user)
