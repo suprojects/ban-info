@@ -19,6 +19,8 @@ As you would have read in the /start, I can scan members against Telegram"s lead
 👥 <b>Group Commands:</b>
 
 1️⃣ /check - Send /check as a reply to a user"s message to check the ban info of the user.
+2️⃣ /check @username - Check the ban info of the user by passing the username.
+3️⃣ /check <code>userid</code> - Check the info by passing the userid.
 
 👤 <b>Private Commands:</b>
 
@@ -26,12 +28,8 @@ As you would have read in the /start, I can scan members against Telegram"s lead
 2️⃣ /help - Sends this Help message.
 3️⃣ /checkme - Check the ban info of yourself.
 4️⃣ Forward me any user"s message to check the info.
-
-🤫 <b>Privacy mode:</b>
-
-To protect your privacy in your groups, <a href="https://core.telegram.org/bots#privacy-mode">Privacy mode</a> is turned on in this bot. Hence, I will not be able to see the normal messages you send in your group.
-
-But on the downside 👎, I will not be able to see if you send commands like <code>/check</code>. To overcome this, please send the commands like <code>/check@{botusername}</code>.
+5️⃣ /check @username - Check the ban info of the user by passing the username.
+6️⃣ /check <code>userid</code> - Check the info by passing the userid.
 
 """.format(botusername=context.bot.username), parse_mode="HTML", disable_web_page_preview=True, reply_markup=BUTTON_MARKUP)
 
