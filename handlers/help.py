@@ -1,5 +1,6 @@
+from database.botusers import new_user
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, Filters
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 def help_text(update, context):
@@ -33,8 +34,8 @@ As you would have read in the /start, I can scan members against Telegram"s lead
 
 """.format(botusername=context.bot.username), parse_mode="HTML", disable_web_page_preview=True, reply_markup=BUTTON_MARKUP)
 
+    new_user(update.message.from_user)
 
 __handlers__ = [
-    [CommandHandler("help", help_text,
-                    filters=Filters.chat_type.private, run_async=True)]
+    [CommandHandler("help", help_text, filters=Filters.chat_type.private, run_async=True)],
 ]
