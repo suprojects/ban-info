@@ -26,7 +26,7 @@ def fwdcheck(update, context):
 
     message.edit_text(text=text, parse_mode="HTML", disable_web_page_preview=True)
 
-    botusers.tgusers(userinfo)
+    tgusers.new_user(userinfo)
     botusers.new_user(update.message.from_user)
 
 
