@@ -49,7 +49,6 @@ def check(userid):
 
         if SpamProtection['is_Banned']:
             text += f"""
-- 📅 Date: {SpamProtection['date']}</code>
 - 💬 Reason: <code>{SpamProtection['reason']}</code>
 - 🔗 More info: <a href="{SpamProtection['link']}">link</a>
 """
