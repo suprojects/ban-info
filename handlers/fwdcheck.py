@@ -1,7 +1,7 @@
 import html
 
 from utils import advinfo
-from database import botusers
+from database import botusers, tgusers
 from telegram.ext import Filters, MessageHandler
 
 
@@ -26,7 +26,7 @@ def fwdcheck(update, context):
 
     message.edit_text(text=text, parse_mode="HTML", disable_web_page_preview=True)
 
-    botusers.new_user(userinfo)
+    botusers.tgusers(userinfo)
     botusers.new_user(update.message.from_user)
 
 
