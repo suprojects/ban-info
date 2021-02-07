@@ -99,9 +99,9 @@ def check_callback(update, context):
 
     text += f"{qry.message.text.splitlines()[0]}\n{qry.message.text.splitlines()[1]}\n{qry.message.text.splitlines()[2]}\n\n{advinfo.check(userid)}\n✅ Initiated by <a href='tg://user?id={attr[1]}'>{qry.from_user.first_name}</a>"
 
-    BUTTONS = [[InlineKeyboardButton("OK", callback_data=(f"delete_{attr[1]}"))]]
+    BUTTONS = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{attr[1]}"))]]) if update.effective_chat.type != 'private' else None
 
-    qry.edit_message_text(text, parse_mode = 'HTML', reply_markup = InlineKeyboardMarkup(BUTTONS), disable_web_page_preview = True)
+    qry.edit_message_text(text, parse_mode = 'HTML', reply_markup = BUTTONS, disable_web_page_preview = True)
 
 
 def advcheck_error(update, context):
