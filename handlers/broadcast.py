@@ -27,7 +27,7 @@ def broadcast(update, context):
 
         total += 1
 
-    update.message.reply_text(f"Broadcast Complete 📤\n\n🔢 Chats Count: <code>{len(chats)}</code> chats\n💬 Total attempts: <code>{total}</code> chats\n✅ Successfully sent: <code>{success}</code> chats\n❌ Failed (Blocked by user): <code>{failed}</code> chats", parse_mode = 'HTML')
+    update.message.reply_text(f"Broadcast Complete 📤\n\n🔢 Chats Count: <code>{len(users)}</code> chats\n💬 Total attempts: <code>{total}</code> chats\n✅ Successfully sent: <code>{success}</code> chats\n❌ Failed (Blocked by user): <code>{failed}</code> chats", parse_mode = 'HTML')
 
 def group_broadcast(update, context):
     msg = update.message
