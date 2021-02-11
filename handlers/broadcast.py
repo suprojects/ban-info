@@ -46,7 +46,7 @@ def group_broadcast(update, context):
             context.bot.send_message(chat['id'], text)
             success += 1
 
-        except error.Unauthorized:
+        except error.BadRequest:
             botchats.remove_chats(chat['id'])
             failed += 1
 
