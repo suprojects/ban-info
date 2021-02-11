@@ -15,7 +15,7 @@ def broadcast(update, context):
 
     success, failed, total = int(0), int(0), int(0)
 
-    for user in users:
+    for chat in chats:
 
         try:
             context.bot.send_message(user['id'], text)
