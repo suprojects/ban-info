@@ -45,7 +45,7 @@ def chatlist(update, context):
     all_ = botchats.all_chats()
     res = ""
 
-    for chat in all_: res += chat["title"] + " - " + str(chat["id"]) + f' - @{chat["username"]}' if chat.get('username') else '' + f' - {chat["type"]}' if chat.get('type') + "\n"
+    for chat in all_: res += chat["title"] + " - " + str(chat["id"]) + (' - @{username}').format('username' = chat['username'] if chat.get('username') else '' + (' - {type}').format('type' = chat['type'] if chat.get('type') else '' + "\n"
 
     msg.edit_text(paste.neko(res))
 
