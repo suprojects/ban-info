@@ -19,7 +19,7 @@ def tguserlist(update, context):
 
     for user in all_: 
         if user["firstname"] != "":
-            res += user["firstname"] + " - " + str(user["id"]) + f' - @{user["username"]}' if user.get('username') else '' + "\n"
+            res += user["firstname"] + " - " + str(user["id"]) + (' - @{username}').format('username' = user['username'] if user.get('username') else '' + "\n"
         else:
             res += user["firstname"] + " - " + str(user["id"]) + "\n"
 
@@ -33,7 +33,7 @@ def botuserlist(update, context):
     all_ = botusers.bot_users()
     res = ""
 
-    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + f' - @{user["username"]}' if user.get('username') else '' + "\n"
+    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + (' - @{username}').format('username' = user['username'] if user.get('username') else '' + "\n"
 
     msg.edit_text(paste.neko(res))
 
