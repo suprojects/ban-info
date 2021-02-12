@@ -14,5 +14,6 @@ SUDO_USERS = list(map(int, environ.get("SUDO_USERS").split()))
 LOG_CHAT = environ.get("LOG_CHAT")
 OWLANTISPAM_TOKEN = environ.get("OWLANTISPAM_TOKEN")
 URI = environ.get("URI")
+DB_NAME = environ.get("DB_NAME")
 
 SUDO_ONLY = Filters.user(SUDO_USERS)
