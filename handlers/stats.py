@@ -17,7 +17,7 @@ def tguserlist(update, context):
     all_ = tgusers.all_users()
     res = ""
 
-    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + ((' - ' + user['username']) if user.get('username') else "") + "\n"
+    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + ((' - @' + user['username']) or "") + "\n"
 
     msg.edit_text(paste.neko(res))
 
@@ -29,7 +29,7 @@ def botuserlist(update, context):
     all_ = botusers.bot_users()
     res = ""
 
-    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + ((' - ' + user['username']) if user.get('username') else "") + "\n"
+    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + ((' - @' + user['username']) or "") + "\n"
 
     msg.edit_text(paste.neko(res))
 
@@ -41,7 +41,7 @@ def chatlist(update, context):
     all_ = botchats.all_chats()
     res = ""
 
-    for chat in all_: res += chat["title"] + " - " + str(chat["id"]) + ((' - ' + chat['username']) if chat.get('username') else "") + ((' - ' + chat['type']) if chat.get('type') else "") + "\n"
+    for chat in all_: res += chat["title"] + " - " + str(chat["id"]) + ((' - @' + chat['username']) or "") + ((' - ' + chat['type']) or "") + "\n"
 
     msg.edit_text(paste.neko(res))
 
