@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from secrets import URI
+from secrets import URI, DB_NAME
 
 client = MongoClient(URI)
-db = client["ban-bot"]
+db = client[DB_NAME]
