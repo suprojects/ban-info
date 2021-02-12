@@ -17,7 +17,11 @@ def tguserlist(update, context):
     all_ = tgusers.all_users()
     res = ""
 
-    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + ((' - @' + user['username']) or " ") + "\n"
+    for user in all_: 
+        if user["firstname"] != "":
+            res += user["firstname"] + " - " + str(user["id"]) + str(f' - @{user['username']}') + "\n"
+        else:
+            res += user["firstname"] + " - " + str(user["id"]) + "\n"
 
     msg.edit_text(paste.neko(res))
 
