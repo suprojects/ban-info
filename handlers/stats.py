@@ -19,7 +19,7 @@ def tguserlist(update, context):
 
     for user in all_: 
         if user["firstname"] != "":
-            res += user["firstname"] + " - " + str(user["id"]) + str(f' - @{user['username']}') + "\n"
+            res += user["firstname"] + " - " + str(user["id"]) + f' - @{user["username"]}' if user.get('username') else '' + "\n"
         else:
             res += user["firstname"] + " - " + str(user["id"]) + "\n"
 
@@ -33,7 +33,7 @@ def botuserlist(update, context):
     all_ = botusers.bot_users()
     res = ""
 
-    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + ((' - @' + user['username']) or " ") + "\n"
+    for user in all_: res += user["firstname"] + " - " + str(user["id"]) + f' - @{user["username"]}' if user.get('username') else '' + "\n"
 
     msg.edit_text(paste.neko(res))
 
@@ -45,7 +45,7 @@ def chatlist(update, context):
     all_ = botchats.all_chats()
     res = ""
 
-    for chat in all_: res += chat["title"] + " - " + str(chat["id"]) + ((' - @' + chat['username']) or " ") + ((' - ' + chat['type']) or " ") + "\n"
+    for chat in all_: res += chat["title"] + " - " + str(chat["id"]) + f' - @{chat["username"]}' if chat.get('username') else '' + f' - {chat["type"]}' if chat.get('type') + "\n"
 
     msg.edit_text(paste.neko(res))
 
