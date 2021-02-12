@@ -11,7 +11,7 @@ SPAMWATCH_TOKEN = environ.get("SPAMWATCH")
 NOSPAMPLUS_TOKEN = environ.get("NOSPAMPLUS")
 BOT_TOKEN = environ.get("BOT_TOKEN")
 SUDO_USERS = list(map(int, environ.get("SUDO_USERS").split()))
-LOG_CHAT = environ.get("LOG_ID")
+LOG_CHAT = environ.get("LOG_CHAT")
 OWLANTISPAM_TOKEN = environ.get("OWLANTISPAM")
 URI = environ.get("URI")
 
