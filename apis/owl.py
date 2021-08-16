@@ -1,8 +1,8 @@
 import owlantispam
 from secrets import OWLANTISPAM_TOKEN
 
-client = owlantispam.Client(OWLANTISPAM_TOKEN)
-
+try: client = owlantispam.Client(OWLANTISPAM_TOKEN)
+except: return
 
 def check(userid):
 
